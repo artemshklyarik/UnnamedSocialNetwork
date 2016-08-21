@@ -1,0 +1,11 @@
+{
+    "name": "artem/unnamed-social-network",
+    "authors": [
+        {
+            "name": "Artem Shklyarik",
+            "email": "artem-shklyarik@yandex.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
