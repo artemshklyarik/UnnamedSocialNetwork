@@ -30,7 +30,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 np">
-                            <a href="#">Registration</a>
+                            <a href="auth/register">Registration</a>
                         </div>
                         <div class="col-md-6 right np">
                             <input type="checkbox" name="remember"> Remember Me
