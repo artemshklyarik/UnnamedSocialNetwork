@@ -8,7 +8,35 @@ body {
     font-weight: 300;
 }
 
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.nm {
+    margin: 0;
+}
+
+.np {
+    padding: 0;
+}
+
+.row {
+    margin: 10px -15px;
+}
+img {
+    max-width: 100%;
+}
+
 .footer {
+    padding: 10px 0;
     text-align: center;
     position: fixed;
     bottom: 0;
@@ -19,4 +47,18 @@ body {
 
 .footer .title{
     font-size: 24px;
+}
+
+.auth{
+    padding-top: 200px;
+}
+
+.info-group {
+    padding-top: 165px;
+    padding-right: 85px;
+}
+
+.info-group img{
+    width: 64px;
+    border-radius: 50%;
 }

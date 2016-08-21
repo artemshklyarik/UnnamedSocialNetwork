@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Routing\Controller;
 
 class MainController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('main.index');
+        if ($request->user()) {
+            return view('profile');
+        } else {
+            return view('auth.auth');
+        }
     }
 }
