@@ -14,8 +14,10 @@ class MainController extends Controller
     }
     public function index(Request $request)
     {
+        $users = User::all();
+
         if ($request->user()) {
-            return view('profile');
+            return view('profile', ['users' => $users]);
         } else {
             return view('auth.auth');
         }
@@ -25,6 +27,6 @@ class MainController extends Controller
     {
         $users = User::all();
 
-        return view('user.profile', ['users' => $users]);
+        return view('profile', ['users' => $users]);
     }
 }
