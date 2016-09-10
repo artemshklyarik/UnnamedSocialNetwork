@@ -22,9 +22,18 @@ Route::get('/', ['uses' => 'MainController@index', 'as' => 'main']);
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('auth/logout', ['uses' => 'Auth\AuthController@getLogout', 'as' => 'logout']);
 
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('user/{id}', ['middleware' => 'App\Http\Middleware\UserCheck', 'uses' => 'MainController@showProfile', 'as' => 'user']);
+
+Route::post('user/ask/{id}', ['uses' => 'MainController@askQuestion', 'as' => 'ask_question']);
+Route::post('user/answer/{id}', ['uses' => 'MainController@answerQuestion', 'as' => 'answer_question']);
+
+Route::get('edit_profile', [
+//    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'MainController@editProfile',
+    'as' => 'edit_profile'
+]);
