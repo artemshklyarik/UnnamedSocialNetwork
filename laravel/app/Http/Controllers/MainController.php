@@ -8,6 +8,10 @@ use App\User;
 use App\Question;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Input;
+use Validator;
+use Redirect;
+use Session;
 
 class MainController extends Controller
 {
@@ -20,13 +24,15 @@ class MainController extends Controller
         if ($request->user()) {
             $users        = User::all();
             $userId       = $request->user()->id;
-            $newQuestions = $this->getNewQuestions($userId);
-            $questions    = $this->getQuestions($userId);
+            $newQuestions = Question::getNewQuestions($userId);
+            $questions    = Question::getQuestions($userId);
+            $avatarLink   = User::getAvatarLink($userId);
 
-            return view('profile', [
-                'users'        => $users,
-                'newQuestions' => $newQuestions,
-                'Questions'    => $questions
+            return view('user/profile', [
+                'users'         => $users,
+                'newQuestions'  => $newQuestions,
+                'Questions'     => $questions,
+                'avatarLink'    => $avatarLink
             ]);
         } else {
             return view('auth.auth');
@@ -35,67 +41,63 @@ class MainController extends Controller
 
     public function showProfile(Request $request, $id)
     {
-        $users = User::all();
-        $userId = $request->user()->id;
-        $newQuestions = $this->getNewQuestions($userId);
-        $questions    = $this->getQuestions($id);
+        $users        = User::all();
+        $userId       = $request->user()->id;
+        $newQuestions = Question::getNewQuestions($userId);
+        $questions    = Question::getQuestions($id);
+        $avatarLink   = User::getAvatarLink($id);
 
-        return view('profile', [
-            'users'    => $users,
-            'id'       => $id,
-            'newQuestions' => $newQuestions,
-            'Questions'    => $questions
+        return view('user/profile', [
+            'users'         => $users,
+            'id'            => $id,
+            'newQuestions'  => $newQuestions,
+            'Questions'     => $questions,
+            'avatarLink'    => $avatarLink
         ]);
-    }
-
-    public function getNewQuestions($userId)
-    {
-        $newQuestions = Question::latest('question_man')
-            ->where('answer_man', '=', $userId)
-            ->where('answered',   '=', 0)
-            ->get();
-        return $newQuestions;
-    }
-
-    public function getQuestions($userId)
-    {
-        $newQuestions = Question::latest('question_man')
-            ->where('answer_man', '=', $userId)
-            ->where('answered',   '=', 1)
-            ->get();
-        return $newQuestions;
     }
 
     public function editProfile(Request $request)
     {
-        return 'edit page';
+        $userId     = $request->user()->id;
+        $avatarLink = User::getAvatarLink($userId);
+
+        return view('user/editProfile', [
+            'avatarLink' => $avatarLink
+        ]);
     }
 
-    public function askQuestion(Request $request, $id)
+    public function uploadPhoto(Request $request)
     {
-        $fromId = $request->user()->id;
+        $file = array('image' => Input::file('photo'));
+        // setting up rules
+        $rules = array('image' => 'required'); //mimes:jpeg,bmp,png and for max size max:10000
+        // doing the validation, passing post data, rules and the messages
+        $validator = Validator::make($file, $rules);
+        if ($validator->fails()) {
+            // send back to the page with the input data and errors
+            return Redirect::to('edit_profile')->withInput()->withErrors($validator);
+        }
+        else {
+            // checking file is valid.
+            if (Input::file('photo')->isValid()) {
+                $destinationPath = 'uploads'; // upload path
+                $extension = Input::file('photo')->getClientOriginalExtension(); // getting image extension
+                $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                Input::file('photo')->move($destinationPath, $fileName); // uploading file to given path
+                // sending back with message
+                Session::flash('success', 'Upload successfully');
 
-        DB::table('questions')->insert([
-                'question'      => $request->question,
-                'question_man'  => $fromId,
-                'question_time' => Carbon::now(),
-                'answer_man'    => $id
-            ]
-        );
+                $userId = $request->user()->id;
+                $avatarLink = $destinationPath . '/' . $fileName;
+                User::changePhoto($userId, $avatarLink);
 
-        return redirect()->route('user', ['id' => $id]);
-    }
-
-    public function answerQuestion(Request $request, $idQuestion)
-    {
-        DB::table('questions')
-            ->where('id', $idQuestion)
-            ->update([
-                'answer' => $request->answer,
-                'answered' => 1,
-                'answer_time' => Carbon::now()
-            ]);
-
-        return redirect('/');
+                return Redirect::to('edit_profile');
+            }
+            else {
+                // sending back with error message.
+                Session::flash('error', 'uploaded file is not valid');
+                return Redirect::to('edit_profile');
+            }
+        }
     }
 }

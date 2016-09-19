@@ -115,3 +115,42 @@ textarea {
         font-weight: 300;
         margin: 0;
     }
+
+    .user-page #question {
+        padding-top: 30px;
+    }
+
+.edit_profile {
+
+}
+
+    .edit_profile .photo {
+
+    }
+
+    .edit_profile .toplink {
+        padding-bottom: 15px;
+    }
+        .edit_profile .photo img{
+            max-width: 200px;
+        }
+
+        .edit_profile .photo .new_photo {
+            padding-top: 30px;
+        }
+            .edit_profile .photo .new_photo p {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .edit_profile .photo .new_photo p.success{
+                color: forestgreen;
+            }
+
+            .edit_profile .photo .new_photo p.error{
+                color: red;
+            }
+
+            .edit_profile .photo .new_photo input[type='file']{
+                margin: 20px auto;
+            }

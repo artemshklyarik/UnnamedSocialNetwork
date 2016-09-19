@@ -14,9 +14,21 @@
 
     </head>
     <body>
-
-
-
+        @if (Auth::check())
+        <div class="container">
+            <div class="row header">
+                <div class="col-sm-8 left logo">
+                    <h4>
+                        <a href="/">Unnamed Social Network</a>
+                    </h4>
+                </div>
+                <div class="col-sm-4 right">
+                    <a class="btn btn-default" href="{!! route('logout') !!}" role="button">LOG OUT</a>
+                </div>
+            </div>
+        </div>
+        @endif
+        
         <div class="container">
             @yield('content')
         </div>

@@ -37,3 +37,8 @@ Route::get('edit_profile', [
     'uses' => 'MainController@editProfile',
     'as' => 'edit_profile'
 ]);
+
+Route::post('edit_profile/upload_photo', [
+    'uses' => 'MainController@uploadPhoto',
+    'as' => 'upload_photo'
+]);
