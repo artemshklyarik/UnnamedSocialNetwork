@@ -33,7 +33,7 @@ Route::post('user/ask/{id}', ['uses' => 'MainController@askQuestion', 'as' => 'a
 Route::post('user/answer/{id}', ['uses' => 'MainController@answerQuestion', 'as' => 'answer_question']);
 
 Route::get('edit_profile', [
-//    'middleware' => 'App\Http\Middleware\UserCheck',
+    'middleware' => 'App\Http\Middleware\UserCheck',
     'uses' => 'MainController@editProfile',
     'as' => 'edit_profile'
 ]);

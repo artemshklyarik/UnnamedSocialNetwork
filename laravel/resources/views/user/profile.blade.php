@@ -19,16 +19,37 @@
                     <img src="{!! $avatarLink !!} " alt="avatar">
                 </div>
                 <div class="col-md-8 info">
-                    @if(isset($id))
-                        <h3 id="name">
-                            {!! $users[$id - 1]->name !!}
-                        </h3>
-                    @else
-                        <h3 id="name">
-                            {!! Auth::user()->name !!}
-                        </h3>
-                        (This is your page!)
-                    @endif
+                    <div class="row nm name">
+                        @if(isset($id))
+                            <h3 id="name">
+                                {!! $users[$id - 1]->name !!}
+                            </h3>
+                        @else
+                            <h3 id="name">
+                                {!! Auth::user()->name !!}
+                            </h3>
+                            (This is your page!)
+                        @endif
+                    </div>
+                    <div class="information left">
+                        <div class="row nm">
+                            <div class="col-xs-4 title">
+                                Gender:
+                            </div>
+                            <div class="col-xs-8">
+
+                            </div>
+                        </div>
+                        <div class="row nm">
+                            <div class="col-xs-4 title">
+                                Date of birth:
+                            </div>
+                            <div class="col-xs-8">
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="row" id="question">

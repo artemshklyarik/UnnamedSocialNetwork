@@ -25,9 +25,14 @@ class UserCheck
             $authUserID = Auth::user()->id;
         }
 
-
-        if ($checkUser === NULL || $authUserID == $requestUserId || $authUserID == false) {
-            return redirect('/');
+        if (isset($request->id)) {
+            if ($checkUser === NULL || $authUserID == $requestUserId || $authUserID == false) {
+                return redirect('/');
+            }
+        } else {
+            if (!$authUserID) {
+                return redirect('/');
+            }
         }
 
         return $next($request);

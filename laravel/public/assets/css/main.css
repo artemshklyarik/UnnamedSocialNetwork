@@ -120,6 +120,16 @@ textarea {
         padding-top: 30px;
     }
 
+    .user-page .information {
+        padding-top: 30px;
+    }
+        .user-page .information .row {
+            padding: 5px 0;
+        }
+
+        .user-page .information .title {
+            font-weight: 500;
+        }
 .edit_profile {
 
 }
