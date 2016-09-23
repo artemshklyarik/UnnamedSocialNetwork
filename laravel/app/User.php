@@ -58,7 +58,7 @@ class User extends Authenticatable
         if ($select) {
             $imageMediumUrl = asset('uploads/medium/' . $select->avatar_link);
 
-            if (file_exists('uploads/original/' . $select->avatar_link)) {
+            if (file_exists('uploads/medium/' . $select->avatar_link) && $select->avatar_link != '') {
                 $userInfo['avatarLink'] = $imageMediumUrl;
             } else {
                 $userInfo['avatarLink'] = asset('assets/img/defaultAvatar.jpg');
