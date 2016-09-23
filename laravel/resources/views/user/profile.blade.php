@@ -16,7 +16,7 @@
         <div class="col-md-6 user-page">
             <div class="row">
                 <div class="col-md-4 photo">
-                    <img src="{!! $avatarLink !!} " alt="avatar">
+                    <img src="{!! $userInfo['avatarLink'] !!} " alt="avatar">
                 </div>
                 <div class="col-md-8 info">
                     <div class="row nm name">
@@ -32,38 +32,48 @@
                         @endif
                     </div>
                     <div class="information left">
-                        <div class="row nm">
-                            <div class="col-xs-4 title">
-                                Gender:
-                            </div>
-                            <div class="col-xs-8">
-
+                        <div class="row nm np">
+                            <div class="col-xs-12 status center">
+                                {!! $userInfo['status'] !!}
                             </div>
                         </div>
-                        <div class="row nm">
-                            <div class="col-xs-4 title">
-                                Date of birth:
+                        @if ($userInfo['gender'])
+                            <div class="row nm">
+                                <div class="col-xs-4 title">
+                                    Gender:
+                                </div>
+                                <div class="col-xs-8">
+                                    {!! $userInfo['gender'] !!}
+                                </div>
                             </div>
-                            <div class="col-xs-8">
-
+                        @endif
+                        @if ($userInfo['date_of_birthday'])
+                            <div class="row nm">
+                                <div class="col-xs-4 title">
+                                    Date of birth:
+                                </div>
+                                <div class="col-xs-8">
+                                    {!! date('d F, Y', strtotime($userInfo['date_of_birthday'])) !!}
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
 
                 </div>
             </div>
             <div class="row" id="question">
                 @if(isset($id))
-                    <form action="ask/{!! $id !!}" method="post">
+                    {!! Form::open(['route' => ['ask_question', $id]]) !!}
+
                         {!! csrf_field() !!}
                         <h5>Ask your question</h5>
-                        <textarea class="form-control" rows="3" name="question"></textarea>
+                        {!! Form::textarea('question', null, ['class' => 'form-control']) !!}
                         <div class="row">
                             <div class="col-md-12 right">
-                                <button type="submit" class="btn btn-default">Ask question</button>
+                                {!! Form::submit('Ask question', ['class' => 'btn btn-default']) !!}
                             </div>
                         </div>
-                    </form>
+                    {!! Form::close() !!}
                 @else
                     @if(count($newQuestions))
                         <h5>New questions</h5>
@@ -71,19 +81,16 @@
                         <h5>You have not new question</h5>
                     @endif
                     @foreach($newQuestions as $question)
-                        <form action="user/answer/{!! $question['id'] !!}" method="post">
+                        {!! Form::open(['url' => 'user/answer/' . $question['id']]) !!}
                             {!! csrf_field() !!}
-
                             <h5 class="left">{!! $question['question'] !!} <span class="label label-default">New</span></h5>
-
-                            <textarea class="form-control" rows="3" name="answer"></textarea>
+                            {!! Form::textarea('answer', null, ['class' => 'form-control']) !!}
                             <div class="row">
                                 <div class="col-md-12 right">
-                                    <button type="submit" class="btn btn-default">Answer this question</button>
+                                    {!! Form::submit('Answer this question', ['class' => 'btn btn-default']) !!}
                                 </div>
                             </div>
-                        </form>
-
+                        {!! Form::close() !!}
                     @endforeach
                 @endif
             </div>

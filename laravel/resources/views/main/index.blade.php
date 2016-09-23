@@ -14,6 +14,7 @@
         </div>
         <div class="col-md-6 form-group">
             <div class="auth">
+                {!! Form::open(['route' => 'edit_profile']) !!}
                 <form action="/auth/login" method="POST">
                     {!! csrf_field() !!}
                     <div class="row">
@@ -37,7 +38,7 @@
                             <input class="btn btn-default" type="submit" value="Submit">
                         </div>
                     </div>
-                </form>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

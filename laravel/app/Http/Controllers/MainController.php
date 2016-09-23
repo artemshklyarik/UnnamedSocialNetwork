@@ -26,13 +26,13 @@ class MainController extends Controller
             $userId       = $request->user()->id;
             $newQuestions = Question::getNewQuestions($userId);
             $questions    = Question::getQuestions($userId);
-            $avatarLink   = User::getAvatarLink($userId);
+            $userInfo     = User::getUserInfo($userId);
 
             return view('user/profile', [
                 'users'         => $users,
                 'newQuestions'  => $newQuestions,
                 'Questions'     => $questions,
-                'avatarLink'    => $avatarLink
+                'userInfo'      => $userInfo
             ]);
         } else {
             return view('auth.auth');
@@ -45,24 +45,24 @@ class MainController extends Controller
         $userId       = $request->user()->id;
         $newQuestions = Question::getNewQuestions($userId);
         $questions    = Question::getQuestions($id);
-        $avatarLink   = User::getAvatarLink($id);
+        $userInfo     = User::getUserInfo($id);
 
         return view('user/profile', [
             'users'         => $users,
             'id'            => $id,
             'newQuestions'  => $newQuestions,
             'Questions'     => $questions,
-            'avatarLink'    => $avatarLink
+            'userInfo'      => $userInfo
         ]);
     }
 
     public function editProfile(Request $request)
     {
         $userId     = $request->user()->id;
-        $avatarLink = User::getAvatarLink($userId);
+        $userInfo   = User::getUserInfo($userId);
 
         return view('user/editProfile', [
-            'avatarLink' => $avatarLink
+            'userInfo' => $userInfo
         ]);
     }
 
@@ -89,6 +89,7 @@ class MainController extends Controller
 
                 $userId = $request->user()->id;
                 $avatarLink = $destinationPath . '/' . $fileName;
+                User::deletePreviewPhoto($userId);
                 User::changePhoto($userId, $avatarLink);
 
                 return Redirect::to('edit_profile');
@@ -99,5 +100,36 @@ class MainController extends Controller
                 return Redirect::to('edit_profile');
             }
         }
+    }
+
+    public function editUserInfo(Request $request) {
+        $data = Input::all();
+        $userId     = $request->user()->id;
+        User::saveUserInfo($userId, $data);
+
+        return Redirect::to('edit_profile');
+    }
+
+    public function askQuestion(Request $request, $id)
+    {
+        $fromId = $request->user()->id;
+
+        Question::askQuestion([
+            'question'      => $request->question,
+            'question_man'  => $fromId,
+            'answer_man'    => $id
+        ]);
+
+        return redirect()->route('user', ['id' => $id]);
+    }
+
+    public function answerQuestion(Request $request, $idQuestion)
+    {
+        Question::answerQuestion([
+            'idQuestion' => $idQuestion,
+            'answer' => $request->answer
+        ]);
+
+        return redirect('/');
     }
 }

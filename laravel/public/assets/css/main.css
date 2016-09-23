@@ -116,6 +116,12 @@ textarea {
         margin: 0;
     }
 
+    .user-page .status {
+        margin: 0 0 15px 0;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+    }
+
     .user-page #question {
         padding-top: 30px;
     }
@@ -164,3 +170,6 @@ textarea {
             .edit_profile .photo .new_photo input[type='file']{
                 margin: 20px auto;
             }
+    .edit_profile .title {
+        font-weight: 500;
+    }

@@ -16,7 +16,8 @@ class UsersInfo extends Migration
             $table->increments('id');
             $table->text('avatar_link');
             $table->text('status');
-            $table->text('about');
+            $table->text('date_of_birthday');
+            $table->text('gender');
         });
     }
 

@@ -35,10 +35,15 @@ Route::post('user/answer/{id}', ['uses' => 'MainController@answerQuestion', 'as'
 Route::get('edit_profile', [
     'middleware' => 'App\Http\Middleware\UserCheck',
     'uses' => 'MainController@editProfile',
-    'as' => 'edit_profile'
+    'as'   => 'edit_profile'
 ]);
 
 Route::post('edit_profile/upload_photo', [
     'uses' => 'MainController@uploadPhoto',
-    'as' => 'upload_photo'
+    'as'   => 'upload_photo'
+]);
+
+Route::post('edit_profile/edit_user_info', [
+    'uses' => 'MainController@editUserInfo',
+    'as'   => 'edit_user_info'
 ]);
