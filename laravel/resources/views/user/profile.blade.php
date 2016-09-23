@@ -65,14 +65,14 @@
                 @if(isset($id))
                     {!! Form::open(['route' => ['ask_question', $id]]) !!}
 
-                        {!! csrf_field() !!}
-                        <h5>Ask your question</h5>
-                        {!! Form::textarea('question', null, ['class' => 'form-control']) !!}
-                        <div class="row">
-                            <div class="col-md-12 right">
-                                {!! Form::submit('Ask question', ['class' => 'btn btn-default']) !!}
-                            </div>
+                    {!! csrf_field() !!}
+                    <h5>Ask your question</h5>
+                    {!! Form::textarea('question', null, ['class' => 'form-control']) !!}
+                    <div class="row">
+                        <div class="col-md-12 right">
+                            {!! Form::submit('Ask question', ['class' => 'btn btn-default']) !!}
                         </div>
+                    </div>
                     {!! Form::close() !!}
                 @else
                     @if(count($newQuestions))
@@ -82,14 +82,14 @@
                     @endif
                     @foreach($newQuestions as $question)
                         {!! Form::open(['url' => 'user/answer/' . $question['id']]) !!}
-                            {!! csrf_field() !!}
-                            <h5 class="left">{!! $question['question'] !!} <span class="label label-default">New</span></h5>
-                            {!! Form::textarea('answer', null, ['class' => 'form-control']) !!}
-                            <div class="row">
-                                <div class="col-md-12 right">
-                                    {!! Form::submit('Answer this question', ['class' => 'btn btn-default']) !!}
-                                </div>
+                        {!! csrf_field() !!}
+                        <h5 class="left">{!! $question['question'] !!} <span class="label label-default">New</span></h5>
+                        {!! Form::textarea('answer', null, ['class' => 'form-control']) !!}
+                        <div class="row">
+                            <div class="col-md-12 right">
+                                {!! Form::submit('Answer this question', ['class' => 'btn btn-default']) !!}
                             </div>
+                        </div>
                         {!! Form::close() !!}
                     @endforeach
                 @endif

@@ -14,7 +14,7 @@ class Question extends Model
     {
         $newQuestions = self::latest('question_time')
             ->where('answer_man', '=', $userId)
-            ->where('answered',   '=', 0)
+            ->where('answered', '=', 0)
             ->get();
         return $newQuestions;
     }
@@ -27,7 +27,7 @@ class Question extends Model
     {
         $newQuestions = self::latest('answer_time')
             ->where('answer_man', '=', $userId)
-            ->where('answered',   '=', 1)
+            ->where('answered', '=', 1)
             ->get();
         return $newQuestions;
     }
@@ -35,10 +35,10 @@ class Question extends Model
     public static function askQuestion($params)
     {
         DB::table('questions')->insert([
-                'question'      => $params['question'],
-                'question_man'  => $params['question_man'],
+                'question' => $params['question'],
+                'question_man' => $params['question_man'],
                 'question_time' => Carbon::now(),
-                'answer_man'    => $params['answer_man']
+                'answer_man' => $params['answer_man']
             ]
         );
 
@@ -50,7 +50,7 @@ class Question extends Model
         DB::table('questions')
             ->where('id', $params['idQuestion'])
             ->update([
-                'answer' =>$params['answer'],
+                'answer' => $params['answer'],
                 'answered' => 1,
                 'answer_time' => Carbon::now()
             ]);

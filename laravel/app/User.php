@@ -59,23 +59,23 @@ class User extends Authenticatable
             $imageMediumUrl = asset('uploads/medium/' . $select->avatar_link);
 
             if (file_exists('uploads/original/' . $select->avatar_link)) {
-                $userInfo['avatarLink']       = $imageMediumUrl;
+                $userInfo['avatarLink'] = $imageMediumUrl;
             } else {
-                $userInfo['avatarLink']       = asset('assets/img/defaultAvatar.jpg');
+                $userInfo['avatarLink'] = asset('assets/img/defaultAvatar.jpg');
             }
 
             $userInfo['gender'] = '';
             if ($select->gender != 'hide') {
-                $userInfo['gender']           = $select->gender;
+                $userInfo['gender'] = $select->gender;
             }
 
-            $userInfo['date_of_birthday']     = $select->date_of_birthday;
-            $userInfo['status']               = $select->status;
+            $userInfo['date_of_birthday'] = $select->date_of_birthday;
+            $userInfo['status'] = $select->status;
         } else {
-            $userInfo['avatarLink']           = asset('assets/img/defaultAvatar.jpg');
-            $userInfo['gender']               = '';
-            $userInfo['date_of_birthday']     = '';
-            $userInfo['status']               = '';
+            $userInfo['avatarLink'] = asset('assets/img/defaultAvatar.jpg');
+            $userInfo['gender'] = '';
+            $userInfo['date_of_birthday'] = '';
+            $userInfo['status'] = '';
         }
 
         return $userInfo;
@@ -89,8 +89,8 @@ class User extends Authenticatable
 
         if ($select) {
             $originalImage = 'uploads/original/' . $select->avatar_link;
-            $smallImage    = 'uploads/small/'    . $select->avatar_link;
-            $mediumImage   = 'uploads/medium/'   . $select->avatar_link;
+            $smallImage = 'uploads/small/' . $select->avatar_link;
+            $mediumImage = 'uploads/medium/' . $select->avatar_link;
 
             if (file_exists($originalImage)) {
                 unlink($originalImage);

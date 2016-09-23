@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use App\User;
 use App\Question;
 use App\Photos;
-use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Input;
 use Validator;
@@ -20,20 +19,21 @@ class MainController extends Controller
     {
 
     }
+
     public function index(Request $request)
     {
         if ($request->user()) {
-            $users        = User::all();
-            $userId       = $request->user()->id;
+            $users = User::all();
+            $userId = $request->user()->id;
             $newQuestions = Question::getNewQuestions($userId);
-            $questions    = Question::getQuestions($userId);
-            $userInfo     = User::getUserInfo($userId);
+            $questions = Question::getQuestions($userId);
+            $userInfo = User::getUserInfo($userId);
 
             return view('user/profile', [
-                'users'         => $users,
-                'newQuestions'  => $newQuestions,
-                'Questions'     => $questions,
-                'userInfo'      => $userInfo
+                'users' => $users,
+                'newQuestions' => $newQuestions,
+                'Questions' => $questions,
+                'userInfo' => $userInfo
             ]);
         } else {
             return view('auth.auth');
@@ -42,25 +42,25 @@ class MainController extends Controller
 
     public function showProfile(Request $request, $id)
     {
-        $users        = User::all();
-        $userId       = $request->user()->id;
+        $users = User::all();
+        $userId = $request->user()->id;
         $newQuestions = Question::getNewQuestions($userId);
-        $questions    = Question::getQuestions($id);
-        $userInfo     = User::getUserInfo($id);
+        $questions = Question::getQuestions($id);
+        $userInfo = User::getUserInfo($id);
 
         return view('user/profile', [
-            'users'         => $users,
-            'id'            => $id,
-            'newQuestions'  => $newQuestions,
-            'Questions'     => $questions,
-            'userInfo'      => $userInfo
+            'users' => $users,
+            'id' => $id,
+            'newQuestions' => $newQuestions,
+            'Questions' => $questions,
+            'userInfo' => $userInfo
         ]);
     }
 
     public function editProfile(Request $request)
     {
-        $userId     = $request->user()->id;
-        $userInfo   = User::getUserInfo($userId);
+        $userId = $request->user()->id;
+        $userInfo = User::getUserInfo($userId);
 
         return view('user/editProfile', [
             'userInfo' => $userInfo
@@ -77,13 +77,12 @@ class MainController extends Controller
         if ($validator->fails()) {
             // send back to the page with the input data and errors
             return Redirect::to('edit_profile')->withInput()->withErrors($validator);
-        }
-        else {
+        } else {
             // checking file is valid.
             if (Input::file('photo')->isValid()) {
                 $destinationPath = 'uploads/original'; // upload path
                 $extension = Input::file('photo')->getClientOriginalExtension(); // getting image extension
-                $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
                 Input::file('photo')->move($destinationPath, $fileName); // uploading file to given path
                 // sending back with message
                 Session::flash('success', 'Upload successfully');
@@ -94,8 +93,7 @@ class MainController extends Controller
                 User::changePhoto($userId, $avatarLink);
                 Photos::createAllPhotos($fileName);
                 return Redirect::to('edit_profile');
-            }
-            else {
+            } else {
                 // sending back with error message.
                 Session::flash('error', 'uploaded file is not valid');
                 return Redirect::to('edit_profile');
@@ -103,9 +101,10 @@ class MainController extends Controller
         }
     }
 
-    public function editUserInfo(Request $request) {
+    public function editUserInfo(Request $request)
+    {
         $data = Input::all();
-        $userId     = $request->user()->id;
+        $userId = $request->user()->id;
         User::saveUserInfo($userId, $data);
 
         return Redirect::to('edit_profile');
@@ -116,9 +115,9 @@ class MainController extends Controller
         $fromId = $request->user()->id;
 
         Question::askQuestion([
-            'question'      => $request->question,
-            'question_man'  => $fromId,
-            'answer_man'    => $id
+            'question' => $request->question,
+            'question_man' => $fromId,
+            'answer_man' => $id
         ]);
 
         return redirect()->route('user', ['id' => $id]);
