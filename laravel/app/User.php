@@ -56,8 +56,10 @@ class User extends Authenticatable
             ->first();
 
         if ($select) {
-            if (file_exists($select->avatar_link)) {
-                $userInfo['avatarLink']       = asset($select->avatar_link);
+            $imageMediumUrl = asset('uploads/medium/' . $select->avatar_link);
+
+            if (file_exists('uploads/original/' . $select->avatar_link)) {
+                $userInfo['avatarLink']       = $imageMediumUrl;
             } else {
                 $userInfo['avatarLink']       = asset('assets/img/defaultAvatar.jpg');
             }
@@ -86,7 +88,21 @@ class User extends Authenticatable
             ->first();
 
         if ($select) {
-            unlink($select->avatar_link);
+            $originalImage = 'uploads/original/' . $select->avatar_link;
+            $smallImage    = 'uploads/small/'    . $select->avatar_link;
+            $mediumImage   = 'uploads/medium/'   . $select->avatar_link;
+
+            if (file_exists($originalImage)) {
+                unlink($originalImage);
+            }
+
+            if (file_exists($smallImage)) {
+                unlink($smallImage);
+            }
+
+            if (file_exists($mediumImage)) {
+                unlink($mediumImage);
+            }
 
             return true;
         }

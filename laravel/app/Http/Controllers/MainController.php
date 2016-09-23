@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\User;
 use App\Question;
+use App\Photos;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Input;
@@ -80,7 +81,7 @@ class MainController extends Controller
         else {
             // checking file is valid.
             if (Input::file('photo')->isValid()) {
-                $destinationPath = 'uploads'; // upload path
+                $destinationPath = 'uploads/original'; // upload path
                 $extension = Input::file('photo')->getClientOriginalExtension(); // getting image extension
                 $fileName = rand(11111,99999).'.'.$extension; // renameing image
                 Input::file('photo')->move($destinationPath, $fileName); // uploading file to given path
@@ -88,10 +89,10 @@ class MainController extends Controller
                 Session::flash('success', 'Upload successfully');
 
                 $userId = $request->user()->id;
-                $avatarLink = $destinationPath . '/' . $fileName;
+                $avatarLink = $fileName;
                 User::deletePreviewPhoto($userId);
                 User::changePhoto($userId, $avatarLink);
-
+                Photos::createAllPhotos($fileName);
                 return Redirect::to('edit_profile');
             }
             else {

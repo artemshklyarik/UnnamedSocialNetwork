@@ -11,7 +11,7 @@
                 {{--{{ HTML::image($userInfo['avatarLink']) }}--}}
                 <div class="row nm new_photo center">
                     <div class="col-md-12">
-                        {!! Form::open(['route' => 'edit_profile', 'files' => true]) !!}
+                        {!! Form::open(['url' => 'edit_profile/upload_photo', 'files' => true]) !!}
                             {!! csrf_field() !!}
 
                             <div class="status">
