@@ -43,6 +43,10 @@ textarea {
     min-height: 74px;
 }
 
+p.error{
+    color: red;
+}
+
 .footer {
     margin-top: 60px;
     padding: 10px 0;
@@ -161,10 +165,6 @@ textarea {
 
             .edit_profile .photo .new_photo p.success{
                 color: forestgreen;
-            }
-
-            .edit_profile .photo .new_photo p.error{
-                color: red;
             }
 
             .edit_profile .photo .new_photo input[type='file']{

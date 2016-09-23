@@ -17,6 +17,9 @@
                 <form action="/auth/login" method="POST">
                     {!! csrf_field() !!}
                     <div class="row">
+                        <p class="error">{!! $errors->first('email') !!}</p>
+                    </div>
+                    <div class="row">
                         <div class="input-group">
                             <span class="input-group-addon" id="login">@</span>
                             <input name="email" type="email" class="form-control" placeholder="Mail" aria-describedby="basic-addon1" value="{{ old('email') }}">

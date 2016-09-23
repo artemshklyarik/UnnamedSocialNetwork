@@ -16,7 +16,15 @@
             <div class="auth">
                 <form method="POST" action="/auth/register">
                     {!! csrf_field() !!}
-
+                    <div class="row">
+                        @if (count($errors))
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <p class="error">{{ $error }}</p>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
                     <div class="row">
                         <div class="input-group">
                             <span class="input-group-addon" id="login">n</span>
