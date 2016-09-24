@@ -51,7 +51,12 @@
                     </div>
 
                     <div>
-                        <button class="btn btn-default" type="submit">Register</button>
+                        <div class="col-md-6">
+                            <button class="btn btn-default" type="submit">Register</button>
+                        </div>
+                        <div class="col-md-6 right">
+                            <a href="/">Return to Log In page</a>
+                        </div>
                     </div>
 
                 </form>

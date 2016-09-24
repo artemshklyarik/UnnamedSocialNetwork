@@ -4,4 +4,8 @@
 Homestead.yaml
 Homestead.json
 .env
-/public/uploads
+/public/uploads/small
+/public/uploads/medium
+/public/uploads/original
+
+
