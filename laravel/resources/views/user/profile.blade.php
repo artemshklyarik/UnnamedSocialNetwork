@@ -67,6 +67,8 @@
 
                     {!! csrf_field() !!}
                     <h5>Ask your question</h5>
+                    <p class="error">{!! $errors->first('question') !!}</p>
+
                     {!! Form::textarea('question', null, ['class' => 'form-control']) !!}
                     <div class="row">
                         <div class="col-md-12 right">
@@ -80,6 +82,8 @@
                     @else
                         <h5>You have not new question</h5>
                     @endif
+
+                    <p class="error">{!! $errors->first('answer') !!}</p>
                     @foreach($newQuestions as $question)
                         {!! Form::open(['url' => 'user/answer/' . $question['id']]) !!}
                         {!! csrf_field() !!}

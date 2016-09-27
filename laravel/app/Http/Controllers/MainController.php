@@ -112,6 +112,15 @@ class MainController extends Controller
 
     public function askQuestion(Request $request, $id)
     {
+        $validator = Validator::make(
+            ['question' => $request->question],
+            ['question' => 'required']
+        );
+
+        if ($validator->fails()) {
+            return redirect()->route('user', ['id' => $id])->withInput()->withErrors($validator);
+        }
+
         $fromId = $request->user()->id;
 
         Question::askQuestion([
@@ -125,6 +134,15 @@ class MainController extends Controller
 
     public function answerQuestion(Request $request, $idQuestion)
     {
+        $validator = Validator::make(
+            ['answer' => $request->answer],
+            ['answer' => 'required']
+        );
+
+        if ($validator->fails()) {
+            return redirect()->route('/')->withInput()->withErrors($validator);
+        }
+
         Question::answerQuestion([
             'idQuestion' => $idQuestion,
             'answer' => $request->answer
