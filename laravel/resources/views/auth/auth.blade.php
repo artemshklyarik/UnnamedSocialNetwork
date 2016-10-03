@@ -6,10 +6,15 @@
                 <img src="{{ asset('assets/img/author.jpg') }}" alt="artem shklyiarik">
             </div>
             <div class="row">
-                Hello, my name is Artem Shklyarik. This is my pet project. It is social network. Unnamed Social Network.
-                I haven't decided to whom it will be oriented. And then it can be anything in future.
-                No target. There direction. I'll happy for any help.
-                <a href="https://vk.com/artem_shklyarik_4" target="_blank"> You can write me</a>.
+                Hello, my name is Artem Shklyarik.
+                Welcome to my pet project.
+                It is an unnamed Social Network.
+                I have not decided what audience it will be target on and then it can be anything in future.
+                I do not persecute any goal, there is only the idea to create something new.
+                I will be glad to any help, so you can send me your suggestions to
+                <a href="https://twitter.com/tema_johnson" target="_blank">Twitter</a>
+                or
+                <a href="https://www.linkedin.com/in/artem-shklyarik-bb2b14120" target="_blank">LinkedIn</a>
             </div>
         </div>
         <div class="col-md-6 form-group">
