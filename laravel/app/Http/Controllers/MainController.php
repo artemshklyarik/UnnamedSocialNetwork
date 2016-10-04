@@ -124,10 +124,13 @@ class MainController extends Controller
         $fromId = $request->user()->id;
 
         Question::askQuestion([
-            'question' => $request->question,
+            'question'     => $request->question,
             'question_man' => $fromId,
-            'answer_man' => $id
+            'answer_man'   => $id,
+            'anonimous'    => $request->anonimous
         ]);
+
+        Session::flash('success', 'Question successfully');
 
         return redirect()->route('user', ['id' => $id]);
     }
@@ -147,6 +150,8 @@ class MainController extends Controller
             'idQuestion' => $idQuestion,
             'answer' => $request->answer
         ]);
+
+        Session::flash('success', 'Answer successfully');
 
         return redirect('/');
     }
