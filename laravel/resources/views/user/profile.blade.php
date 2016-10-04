@@ -67,11 +67,16 @@
 
                     {!! csrf_field() !!}
                     <h5>Ask your question</h5>
+
+                    <p class="success">{!! Session::get('success') !!}</p>
                     <p class="error">{!! $errors->first('question') !!}</p>
 
                     {!! Form::textarea('question', null, ['class' => 'form-control']) !!}
                     <div class="row">
-                        <div class="col-md-12 right">
+                        <div class="col-sm-6 left">
+                            {!! Form::checkbox('anonimous', true) !!} Anonimous question
+                        </div>
+                        <div class="col-sm-6 right">
                             {!! Form::submit('Ask question', ['class' => 'btn btn-default']) !!}
                         </div>
                     </div>
@@ -84,10 +89,25 @@
                     @endif
 
                     <p class="error">{!! $errors->first('answer') !!}</p>
+                    <p class="success">{!! Session::get('success') !!}</p>
+
                     @foreach($newQuestions as $question)
                         {!! Form::open(['url' => 'user/answer/' . $question['id']]) !!}
                         {!! csrf_field() !!}
-                        <h5 class="left">{!! $question['question'] !!} <span class="label label-default">New</span></h5>
+                        <div class="col-xs-6">
+                            <h5 class="left">{!! $question['question'] !!} <span class="label label-default">New</span></h5>
+                        </div>
+                        <div class="col-xs-6 right">
+                            @if ($question['anonimous'])
+                                from: Anonimous
+                            @else
+                                from:
+                                <a href="href="/user/{!! $users[$question['question_man'] - 1]->id !!}"">
+                                    {!! $users[$question['question_man'] - 1]->name !!}
+                                </a>
+                            @endif
+                        </div>
+
                         {!! Form::textarea('answer', null, ['class' => 'form-control']) !!}
                         <div class="row">
                             <div class="col-md-12 right">
@@ -108,16 +128,19 @@
                 @foreach($Questions as $question)
                     <div class="panel panel-default">
                         <div class="panel-heading">
-
                             <div class="row nm">
                                 <div class="col-md-8 np">
                                     {!! $question['question'] !!}
                                 </div>
                                 <div class="col-md-4 np right">
-                                    from:
-                                    <a href="/user/{!! $users[$question['question_man'] - 1]->id !!}">
+                                    @if ($question['anonimous'])
+                                        from: Anonimous
+                                    @else
+                                        from:
+                                        <a href="href="/user/{!! $users[$question['question_man'] - 1]->id !!}"">
                                         {!! $users[$question['question_man'] - 1]->name !!}
-                                    </a>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
 

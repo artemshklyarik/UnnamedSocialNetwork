@@ -46,7 +46,9 @@ textarea {
 p.error{
     color: red;
 }
-
+p.success{
+    color: forestgreen;
+}
 .footer {
     margin-top: 60px;
     padding: 10px 0;
@@ -161,10 +163,6 @@ p.error{
             .edit_profile .photo .new_photo p {
                 font-size: 14px;
                 font-weight: 600;
-            }
-
-            .edit_profile .photo .new_photo p.success{
-                color: forestgreen;
             }
 
             .edit_profile .photo .new_photo input[type='file']{

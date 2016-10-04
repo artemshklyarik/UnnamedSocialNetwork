@@ -36,11 +36,16 @@ class Question extends Model
 
     public static function askQuestion($params)
     {
+        if (!isset($params['anonimous'])) {
+            $params['anonimous'] = 0;
+        }
+
         DB::table('questions')->insert([
                 'question' => $params['question'],
                 'question_man' => $params['question_man'],
                 'question_time' => Carbon::now(),
-                'answer_man' => $params['answer_man']
+                'answer_man' => $params['answer_man'],
+                'anonimous' => $params['anonimous']
             ]
         );
 
