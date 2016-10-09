@@ -6,11 +6,15 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900|Open+Sans:400,700" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap-theme.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/fancybox/source/jquery.fancybox.css?v=2.1.5') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }}" />
 
         <script src="{{ asset('assets/js/jquery-3.1.0.min.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('assets/js/main.js') }}"></script>
+        <script src="{{ asset('assets/libs/fancybox/lib/jquery.mousewheel-3.0.6.pack.js') }}"></script>
+        <script src="{{ asset('assets/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5') }}"></script>
+
+        <script src="{{ asset('assets/js/main/userpage.js') }}"></script>
 
     </head>
     <body>
