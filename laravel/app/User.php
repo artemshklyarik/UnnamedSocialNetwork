@@ -56,12 +56,18 @@ class User extends Authenticatable
             ->first();
 
         if ($select) {
-            $imageMediumUrl = asset('uploads/medium/' . $select->avatar_link);
+            $imageMediumUrl    = asset('uploads/medium/' . $select->avatar_link);
+            $imageSmallUrl     = asset('uploads/small/' . $select->avatar_link);
+            $imageOriginalUrl  = asset('uploads/original/' . $select->avatar_link);
 
             if (file_exists('uploads/medium/' . $select->avatar_link) && $select->avatar_link != '') {
-                $userInfo['avatarLink'] = $imageMediumUrl;
+                $userInfo['avatarLink']         = $imageMediumUrl;
+                $userInfo['avatarLinkSmall']    = $imageSmallUrl;
+                $userInfo['avatarLinkOriginal'] = $imageOriginalUrl;
             } else {
-                $userInfo['avatarLink'] = asset('assets/img/defaultAvatar.jpg');
+                $userInfo['avatarLink']         = asset('assets/img/defaultAvatar.jpg');
+                $userInfo['avatarLinkSmall']    = asset('assets/img/defaultAvatar.jpg');
+                $userInfo['avatarLinkOriginal'] = asset('assets/img/defaultAvatar.jpg');
             }
 
             $userInfo['gender'] = '';
@@ -72,7 +78,9 @@ class User extends Authenticatable
             $userInfo['date_of_birthday'] = $select->date_of_birthday;
             $userInfo['status'] = $select->status;
         } else {
-            $userInfo['avatarLink'] = asset('assets/img/defaultAvatar.jpg');
+            $userInfo['avatarLink']         = asset('assets/img/defaultAvatar.jpg');
+            $userInfo['avatarLinkSmall']    = asset('assets/img/defaultAvatar.jpg');
+            $userInfo['avatarLinkOriginal'] = asset('assets/img/defaultAvatar.jpg');
             $userInfo['gender'] = '';
             $userInfo['date_of_birthday'] = '';
             $userInfo['status'] = '';

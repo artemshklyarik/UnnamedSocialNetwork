@@ -16,7 +16,10 @@
         <div class="col-md-6 user-page">
             <div class="row">
                 <div class="col-md-4 photo">
-                    <img src="{!! $userInfo['avatarLink'] !!} " alt="avatar">
+                    {{--{!! var_dump($userInfo) !!}--}}
+                    <a id="avatar" href="{!! $userInfo['avatarLinkOriginal'] !!}">
+                        <img src="{!! $userInfo['avatarLinkSmall'] !!}" alt="avatar">
+                    </a>
                 </div>
                 <div class="col-md-8 info">
                     <div class="row nm name">
