@@ -129,7 +129,7 @@
 
             <div class="row nm left">
                 @foreach($Questions as $question)
-                    <div class="panel panel-default">
+                    <div class="panel panel-default answer">
                         <div class="panel-heading">
                             <div class="row nm">
                                 <div class="col-md-8 np">
@@ -141,7 +141,7 @@
                                     @else
                                         from:
                                         <a href="href="/user/{!! $users[$question['question_man'] - 1]->id !!}"">
-                                        {!! $users[$question['question_man'] - 1]->name !!}
+                                            {!! $users[$question['question_man'] - 1]->name !!}
                                         </a>
                                     @endif
                                 </div>
@@ -153,6 +153,12 @@
                         </div>
                     </div>
                 @endforeach
+
+                <div class="row nm center">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-default" id="show_more">Show more</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

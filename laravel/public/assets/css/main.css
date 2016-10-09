@@ -142,6 +142,10 @@ p.success{
         .user-page .information .title {
             font-weight: 500;
         }
+
+        .user-page #show_more {
+            display: none;
+        }
 .edit_profile {
 
 }
