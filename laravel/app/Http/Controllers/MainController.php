@@ -143,7 +143,7 @@ class MainController extends Controller
         );
 
         if ($validator->fails()) {
-            return redirect()->route('/')->withInput()->withErrors($validator);
+            return redirect()->route('main')->withInput()->withErrors($validator);
         }
 
         Question::answerQuestion([
