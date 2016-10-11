@@ -1,25 +1,92 @@
 @extends('layout.app')
 @section('content')
     <div class="content center">
-        <div class="col-md-4 left-panel">
-            <a href="/" id="my-page">My page <span class="badge">{!! count($newQuestions) !!}</span></a>
-            <a href="/edit_profile" id="edit-profile">edit profile</a>
-            <h5>Users</h5>
-            <ul>
-                @foreach($users as $user)
-                    @if($user->id != Auth::user()->id)
-                        <li><a href="/user/{!! $user->id !!}">{!! $user->name !!}</a></li>
-                    @endif
-                @endforeach
-            </ul>
+        <div class="col-md-3 left-panel">
+            <div class="row nm menu">
+                <p>
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    <a href="/" id="my-page">My page
+                        @if(count($newQuestions))
+                            <span class="badge">{!! count($newQuestions) !!}</span>
+                        @endif
+                    </a>
+                    <a href="/edit_profile" id="edit-profile">edit profile</a>
+                </p>
+                <p>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <a href="/friends" id="my-friends">My friends
+                        @if(isset($friends['requests']) && count($friends['requests']))
+                            <span class="badge">{!! count($friends['requests']) !!}</span>
+                        @endif
+                    </a>
+                </p>
+            </div>
+
+            @if(count($friends['all']))
+                <div class="row nm sections" id="friends">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            @if(isset($id))
+                                <a href="/friends?id={!! $id !!}" id="my-friends">Friends
+                                    ({!! count($friends['all']) !!})</a>
+                            @else
+                                <a href="/friends" id="my-friends">Friends ({!! count($friends['all']) !!})</a>
+                            @endif
+                        </div>
+                        <div class="panel-body">
+                            @foreach($friends['all'] as $friend)
+                                <a href="/user/{!! $friend->user_id !!}">
+                                    <div class="col-md-4 center friend">
+                                        <img src="{!! $friend->userInfo["avatarLinkSmall"] !!}"/>
+                                        <p>{!! $friend->userName !!}</p>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="col-md-6 user-page">
             <div class="row">
-                <div class="col-md-4 photo">
-                    {{--{!! var_dump($userInfo) !!}--}}
-                    <a id="avatar" href="{!! $userInfo['avatarLinkOriginal'] !!}">
-                        <img src="{!! $userInfo['avatarLinkSmall'] !!}" alt="avatar">
-                    </a>
+                <div class="col-md-4">
+                    <div class="row nm">
+                        <div class="col-xs-12 photo">
+                            <a id="avatar" href="{!! $userInfo['avatarLinkOriginal'] !!}" class="thumbnail">
+                                <img src="{!! $userInfo['avatarLinkSmall'] !!}" alt="avatar">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row nm">
+                        <div class="col-xs-12 addfriend">
+                            @if(isset($id))
+                                {!! csrf_field() !!}
+
+                                @if($isfriend === 'send request')
+                                    <div class="alert alert-success" role="alert">Request has sent</div>
+                                @elseif($isfriend === 'get request')
+                                    <button type="button" class="btn btn-primary" id="accept_request_friend"
+                                            data-friend-accept="{!! $id !!}">Add to friends
+                                    </button>
+                                    <button type="button" class="btn btn-danger" id="reject_request_friend"
+                                            data-friend-reject="{!! $id !!}">Reject
+                                    </button>
+                                    <div class="alert alert-info" role="alert">{!! $users[$id - 1]->name !!} has sent
+                                        request to you
+                                    </div>
+                                @elseif($isfriend == true)
+                                    <button type="button" class="btn btn-danger" id="removefriend"
+                                            data-friend-remove="{!! $id !!}">Remove friend
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-primary" id="addfriend"
+                                            data-friend-request="{!! $id !!}">Add to friend
+                                    </button>
+                                @endif
+
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-8 info">
                     <div class="row nm name">
@@ -98,7 +165,8 @@
                         {!! Form::open(['url' => 'user/answer/' . $question['id']]) !!}
                         {!! csrf_field() !!}
                         <div class="col-xs-6">
-                            <h5 class="left">{!! $question['question'] !!} <span class="label label-default">New</span></h5>
+                            <h5 class="left">{!! $question['question'] !!} <span class="label label-default">New</span>
+                            </h5>
                         </div>
                         <div class="col-xs-6 right">
                             @if ($question['anonimous'])
@@ -106,7 +174,7 @@
                             @else
                                 from:
                                 <a href="href="/user/{!! $users[$question['question_man'] - 1]->id !!}"">
-                                    {!! $users[$question['question_man'] - 1]->name !!}
+                                {!! $users[$question['question_man'] - 1]->name !!}
                                 </a>
                             @endif
                         </div>
@@ -129,7 +197,7 @@
 
             <div class="row nm left">
                 @foreach($Questions as $question)
-                    <div class="panel panel-default answer">
+                    <div class="panel panel-info answer">
                         <div class="panel-heading">
                             <div class="row nm">
                                 <div class="col-md-8 np">
@@ -141,7 +209,7 @@
                                     @else
                                         from:
                                         <a href="href="/user/{!! $users[$question['question_man'] - 1]->id !!}"">
-                                            {!! $users[$question['question_man'] - 1]->name !!}
+                                        {!! $users[$question['question_man'] - 1]->name !!}
                                         </a>
                                     @endif
                                 </div>

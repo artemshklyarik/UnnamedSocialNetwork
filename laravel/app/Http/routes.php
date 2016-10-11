@@ -35,15 +35,41 @@ Route::post('user/answer/{id}', ['uses' => 'MainController@answerQuestion', 'as'
 Route::get('edit_profile', [
     'middleware' => 'App\Http\Middleware\UserCheck',
     'uses' => 'MainController@editProfile',
-    'as'   => 'edit_profile'
+    'as' => 'edit_profile'
 ]);
 
 Route::post('edit_profile/upload_photo', [
     'uses' => 'MainController@uploadPhoto',
-    'as'   => 'upload_photo'
+    'as' => 'upload_photo'
 ]);
 
 Route::post('edit_profile/edit_user_info', [
     'uses' => 'MainController@editUserInfo',
-    'as'   => 'edit_user_info'
+    'as' => 'edit_user_info'
+]);
+
+Route::post('friends/addfriend', [
+    'uses' => 'FriendController@addFriend',
+    'as' => 'add_friend'
+]);
+
+Route::post('friends/accept_request_friend', [
+    'uses' => 'FriendController@acceptRequestFriend',
+    'as' => 'accept_request_friend'
+]);
+
+Route::post('friends/reject_request_friend', [
+    'uses' => 'FriendController@rejectRequestFriend',
+    'as' => 'reject_request_friend'
+]);
+
+Route::post('friends/remove_friend', [
+    'uses' => 'FriendController@rejectRequestFriend',
+    'as' => 'remove_friend'
+]);
+
+Route::get('friends', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'FriendController@userFriends',
+    'as' => 'user_friends'
 ]);
