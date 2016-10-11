@@ -8,6 +8,10 @@ body {
     font-weight: 300;
 }
 
+button {
+    outline:none!important;
+}
+
 .left {
     text-align: left;
 }
@@ -106,6 +110,7 @@ p.success{
     }
     .left-panel a {
         color: #000;
+        margin-left: 5px;
     }
 
     .left-panel ul {
@@ -114,6 +119,15 @@ p.success{
         .left-panel ul li {
             list-style-type: none;
         }
+    .left-panel #friends {
+        margin-top: 30px!important;
+    }
+        .left-panel #friends .friend {
+            padding: 5px;
+        }
+            .left-panel #friends .friend p {
+                margin-top: 5px;
+            }
 .user-page {
 
 }
@@ -145,6 +159,14 @@ p.success{
 
         .user-page #show_more {
             display: none;
+        }
+
+    .user-page .addfriend {
+        margin: 10px 0;
+    }
+        .user-page .addfriend button{
+            width: 100%;
+            margin-bottom: 10px;
         }
 .edit_profile {
 

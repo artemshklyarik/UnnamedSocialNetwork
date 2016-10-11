@@ -7,11 +7,11 @@ use Illuminate\Routing\Controller;
 use App\User;
 use App\Question;
 use App\Photos;
-use DB;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Redirect;
 use Session;
+use App\Friend;
 
 class MainController extends Controller
 {
@@ -28,12 +28,14 @@ class MainController extends Controller
             $newQuestions = Question::getNewQuestions($userId);
             $questions = Question::getQuestions($userId);
             $userInfo = User::getUserInfo($userId);
+            $friends = Friend::getUserFriends($userId);
 
             return view('user/profile', [
                 'users' => $users,
                 'newQuestions' => $newQuestions,
                 'Questions' => $questions,
-                'userInfo' => $userInfo
+                'userInfo' => $userInfo,
+                'friends' => $friends
             ]);
         } else {
             return view('auth.auth');
@@ -47,13 +49,17 @@ class MainController extends Controller
         $newQuestions = Question::getNewQuestions($userId);
         $questions = Question::getQuestions($id);
         $userInfo = User::getUserInfo($id);
+        $isfriend = Friend::isfriend($request->user()->id, $id);
+        $friends = Friend::getUserFriends($id);
 
         return view('user/profile', [
             'users' => $users,
             'id' => $id,
             'newQuestions' => $newQuestions,
             'Questions' => $questions,
-            'userInfo' => $userInfo
+            'userInfo' => $userInfo,
+            'isfriend' => $isfriend,
+            'friends' => $friends
         ]);
     }
 
@@ -124,10 +130,10 @@ class MainController extends Controller
         $fromId = $request->user()->id;
 
         Question::askQuestion([
-            'question'     => $request->question,
+            'question' => $request->question,
             'question_man' => $fromId,
-            'answer_man'   => $id,
-            'anonimous'    => $request->anonimous
+            'answer_man' => $id,
+            'anonimous' => $request->anonimous
         ]);
 
         Session::flash('success', 'Question successfully');
