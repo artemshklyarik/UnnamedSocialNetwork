@@ -26,7 +26,6 @@ class Friend extends Model
             return false;
         }
 
-
         DB::table('friends')->insert([
                 'user_id_1' => $idFrom,
                 'user_id_2' => $idTo
