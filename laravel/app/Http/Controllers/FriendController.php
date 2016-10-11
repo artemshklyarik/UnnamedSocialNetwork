@@ -13,9 +13,12 @@ class FriendController extends Controller
     {
         if (isset($request->id) && $request->id) {
             $userId = $request->id;
+            $owner = false;
         } else {
             $userId = $request->user()->id;
+            $owner = true;
         }
+        $friends = Friend::getUserFriends($userId);
         $newQuestions = Question::getNewQuestions($request->user()->id);
         $questions = Question::getQuestions($request->user()->id);
 
