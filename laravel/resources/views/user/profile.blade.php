@@ -174,7 +174,7 @@
                             @else
                                 from:
                                 <a href="/user/{!! $users[$question['question_man'] - 1]->id !!}">
-                                {!! $users[$question['question_man'] - 1]->name !!}
+                                    {!! $users[$question['question_man'] - 1]->name !!}
                                 </a>
                             @endif
                         </div>
@@ -209,7 +209,7 @@
                                     @else
                                         from:
                                         <a href="/user/{!! $users[$question['question_man'] - 1]->id !!}">
-                                        {!! $users[$question['question_man'] - 1]->name !!}
+                                            {!! $users[$question['question_man'] - 1]->name !!}
                                         </a>
                                     @endif
                                 </div>

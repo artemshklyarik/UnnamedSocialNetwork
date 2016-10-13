@@ -31,6 +31,7 @@ class Question extends Model
             ->where('answer_man', '=', $userId)
             ->where('answered', '=', 1)
             ->get();
+
         return $newQuestions;
     }
 
