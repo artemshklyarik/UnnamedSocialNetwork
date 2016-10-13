@@ -173,7 +173,7 @@
                                 from: Anonimous
                             @else
                                 from:
-                                <a href="href="/user/{!! $users[$question['question_man'] - 1]->id !!}"">
+                                <a href="/user/{!! $users[$question['question_man'] - 1]->id !!}">
                                 {!! $users[$question['question_man'] - 1]->name !!}
                                 </a>
                             @endif
@@ -208,7 +208,7 @@
                                         from: Anonimous
                                     @else
                                         from:
-                                        <a href="href="/user/{!! $users[$question['question_man'] - 1]->id !!}"">
+                                        <a href="/user/{!! $users[$question['question_man'] - 1]->id !!}">
                                         {!! $users[$question['question_man'] - 1]->name !!}
                                         </a>
                                     @endif
