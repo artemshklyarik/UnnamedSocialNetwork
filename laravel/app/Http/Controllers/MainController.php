@@ -30,6 +30,8 @@ class MainController extends Controller
             $userInfo = User::getUserInfo($userId);
             $friends = Friend::getUserFriends($userId);
 
+            shuffle($friends['all']);
+
             return view('user/profile', [
                 'users' => $users,
                 'newQuestions' => $newQuestions,
@@ -51,6 +53,8 @@ class MainController extends Controller
         $userInfo = User::getUserInfo($id);
         $isfriend = Friend::isfriend($request->user()->id, $id);
         $friends = Friend::getUserFriends($id);
+
+        shuffle($friends['all']);
 
         return view('user/profile', [
             'users' => $users,

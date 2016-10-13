@@ -34,14 +34,22 @@
                             @endif
                         </div>
                         <div class="panel-body">
-                            @foreach($friends['all'] as $friend)
-                                <a href="/user/{!! $friend->user_id !!}">
+                            @for($i = 0; $i < 6; $i++)
+                                <a href="/user/{!! $friends['all'][$i]->user_id !!}">
                                     <div class="col-md-4 center friend">
-                                        <img src="{!! $friend->userInfo["avatarLinkSmall"] !!}"/>
-                                        <p>{!! $friend->userName !!}</p>
+                                        <img src="{!! $friends['all'][$i]->userInfo["avatarLinkSmall"] !!}"/>
+                                        <p>{!! $friends['all'][$i]->userName !!}</p>
                                     </div>
                                 </a>
-                            @endforeach
+                            @endfor
+                            {{--@foreach($friends['all'] as $friend)--}}
+                                {{--<a href="/user/{!! $friend->user_id !!}">--}}
+                                    {{--<div class="col-md-4 center friend">--}}
+                                        {{--<img src="{!! $friend->userInfo["avatarLinkSmall"] !!}"/>--}}
+                                        {{--<p>{!! $friend->userName !!}</p>--}}
+                                    {{--</div>--}}
+                                {{--</a>--}}
+                            {{--@endforeach--}}
                         </div>
                     </div>
                 </div>
