@@ -32,6 +32,9 @@ Route::get('user/{id}', ['middleware' => 'App\Http\Middleware\UserCheck', 'uses'
 Route::post('user/ask/{id}', ['uses' => 'MainController@askQuestion', 'as' => 'ask_question']);
 Route::post('user/answer/{id}', ['uses' => 'MainController@answerQuestion', 'as' => 'answer_question']);
 
+Route::post('user/question/remove', ['uses' => 'MainController@removeQuestion', 'as' => 'remove_question']);
+
+
 Route::get('edit_profile', [
     'middleware' => 'App\Http\Middleware\UserCheck',
     'uses' => 'MainController@editProfile',

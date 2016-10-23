@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\User;
+use App\Question;
 use Illuminate\Support\Facades\Auth;
 
 class Friend extends Model
@@ -66,24 +67,30 @@ class Friend extends Model
     {
         $friends = array();
 
-        $friends['all'] = DB::table('friends')
+        $friendsList1 = DB::table('friends')
             ->where('user_id_1', '=', $idUser1)
             ->where('confirmed', '=', 1)
-            ->select('id', 'user_id_2 as user_id')
+            ->select('user_id_2 as user_id')
             ->get();
 
-        $friends['all'] += DB::table('friends')
+        $friendsList2 = DB::table('friends')
             ->where('user_id_2', '=', $idUser1)
             ->where('confirmed', '=', 1)
-            ->select('id', 'user_id_1 as user_id')
+            ->select('user_id_1 as user_id')
             ->get();
 
+        $friends['all'] = array_merge($friendsList1, $friendsList2);
 
-        $authUserId = Auth::user()->id;
+        foreach ($friends['all'] as &$friend) {
+            $userId = $friend->user_id;
+            $friend->userInfo         = User::getUserInfo($userId);
+            $friend->userName         = User::find($userId)->name;
+        }
+        
         $friends['requests'] = DB::table('friends')
-            ->where('user_id_2', '=', $authUserId)
+            ->where('user_id_2', '=', $idUser1)
             ->where('confirmed', '=', 0)
-            ->select('id', 'user_id_1 as user_id')
+            ->select('user_id_1 as user_id')
             ->get();
 
         foreach ($friends['requests'] as &$friend) {
@@ -92,10 +99,34 @@ class Friend extends Model
             $friend->userName = User::find($userId)->name;
         }
 
-        foreach ($friends['all'] as &$friend) {
-            $userId = $friend->user_id;
-            $friend->userInfo = User::getUserInfo($userId);
-            $friend->userName = User::find($userId)->name;
+        if ($idUser2) {
+            $tempArrayFriend = array();
+
+            foreach ($friends['all'] as $friend) {
+                $tempArrayFriend[] = $friend->user_id;
+            }
+
+            $friendsList1 = DB::table('friends')
+                ->where('user_id_1', '=', $idUser2)
+                ->where('confirmed', '=', 1)
+                ->whereIn('user_id_2', $tempArrayFriend)
+                ->select('user_id_2 as user_id')
+                ->get();
+
+            $friendsList2 = DB::table('friends')
+                ->where('user_id_2', '=', $idUser2)
+                ->where('confirmed', '=', 1)
+                ->whereIn('user_id_1', $tempArrayFriend)
+                ->select('user_id_1 as user_id')
+                ->get();
+
+            $friends['mutual'] = array_merge($friendsList1, $friendsList2);
+
+            foreach ($friends['mutual'] as &$friend) {
+                $userId = $friend->user_id;
+                $friend->userInfo = User::getUserInfo($userId);
+                $friend->userName = User::find($userId)->name;
+            }
         }
 
         return $friends;

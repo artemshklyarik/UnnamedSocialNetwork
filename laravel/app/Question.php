@@ -14,10 +14,13 @@ class Question extends Model
      */
     public static function getNewQuestions($userId)
     {
-        $newQuestions = self::latest('question_time')
+        $newQuestions = DB::table('questions')
+            ->join('users', 'users.id', '=', 'questions.question_man')
             ->where('answer_man', '=', $userId)
             ->where('answered', '=', 0)
+            ->select('questions.*', 'users.name')
             ->get();
+
         return $newQuestions;
     }
 
@@ -27,12 +30,35 @@ class Question extends Model
      */
     public static function getQuestions($userId)
     {
-        $newQuestions = self::latest('answer_time')
+        $newQuestions = DB::table('questions')
+            ->join('users', 'users.id', '=', 'questions.question_man')
             ->where('answer_man', '=', $userId)
             ->where('answered', '=', 1)
+            ->select('questions.*', 'users.name')
             ->get();
 
         return $newQuestions;
+    }
+
+
+    public static function removeItem($itemId, $authUserId)
+    {
+        $checkQuestions = DB::table('questions')
+            ->where('id', '=', $itemId)
+            ->where('answer_man', '=', $authUserId)
+            ->first();
+
+        if (isset($checkQuestions) && $checkQuestions) {
+            if (DB::table('questions')
+                ->where('id', '=', $itemId)
+                ->where('answer_man', '=', $authUserId)
+                ->delete()
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static function askQuestion($params)
@@ -64,5 +90,16 @@ class Question extends Model
             ]);
 
         return true;
+    }
+
+    public static function getUserCount($userId)
+    {
+        $count = 0;
+
+        $count = DB::table('questions')
+            ->where('answer_man', $userId)
+            ->count();
+
+        return $count;
     }
 }

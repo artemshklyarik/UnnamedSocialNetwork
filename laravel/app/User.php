@@ -50,6 +50,14 @@ class User extends Authenticatable
     {
         $userInfo = array();
 
+        //get general info
+        $select = DB::table('users')
+            ->where('id', $userId)
+            ->first();
+
+        $userInfo['id']   = $userId;
+        $userInfo['name'] = $select->name;
+
         //get User avatar link
         $select = DB::table('users_info')
             ->where('id', $userId)
@@ -95,7 +103,7 @@ class User extends Authenticatable
             ->where('id', $userId)
             ->first();
 
-        if ($select) {
+        if ($select && $select->avatar_link) {
             $originalImage = 'uploads/original/' . $select->avatar_link;
             $smallImage = 'uploads/small/' . $select->avatar_link;
             $mediumImage = 'uploads/medium/' . $select->avatar_link;

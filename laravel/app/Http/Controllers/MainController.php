@@ -23,7 +23,6 @@ class MainController extends Controller
     public function index(Request $request)
     {
         if ($request->user()) {
-            $users = User::all();
             $userId = $request->user()->id;
             $newQuestions = Question::getNewQuestions($userId);
             $questions = Question::getQuestions($userId);
@@ -33,10 +32,10 @@ class MainController extends Controller
             shuffle($friends['all']);
 
             return view('user/profile', [
-                'users' => $users,
                 'newQuestions' => $newQuestions,
-                'Questions' => $questions,
+                'questions' => $questions,
                 'userInfo' => $userInfo,
+                'authUserInfo' => $userInfo,
                 'friends' => $friends
             ]);
         } else {
@@ -46,22 +45,22 @@ class MainController extends Controller
 
     public function showProfile(Request $request, $id)
     {
-        $users = User::all();
         $userId = $request->user()->id;
         $newQuestions = Question::getNewQuestions($userId);
         $questions = Question::getQuestions($id);
         $userInfo = User::getUserInfo($id);
+        $authUserInfo = User::getUserInfo($userId);
         $isfriend = Friend::isfriend($request->user()->id, $id);
         $friends = Friend::getUserFriends($id);
 
         shuffle($friends['all']);
 
         return view('user/profile', [
-            'users' => $users,
             'id' => $id,
             'newQuestions' => $newQuestions,
-            'Questions' => $questions,
+            'questions' => $questions,
             'userInfo' => $userInfo,
+            'authUserInfo' => $authUserInfo,
             'isfriend' => $isfriend,
             'friends' => $friends
         ]);
@@ -71,9 +70,12 @@ class MainController extends Controller
     {
         $userId = $request->user()->id;
         $userInfo = User::getUserInfo($userId);
+        $friends = Friend::getUserFriends($userId);
 
         return view('user/editProfile', [
-            'userInfo' => $userInfo
+            'userInfo' => $userInfo,
+            'authUserInfo' => $userInfo,
+            'friends' => $friends
         ]);
     }
 
@@ -118,6 +120,24 @@ class MainController extends Controller
         User::saveUserInfo($userId, $data);
 
         return Redirect::to('edit_profile');
+    }
+
+    public function removeQuestion(Request $request)
+    {
+        $itemId = $request->requestId;
+        $authUserId = $request->user()->id;
+
+        if (Question::removeItem($itemId, $authUserId)) {
+            $response = [
+                'status' => true
+            ];
+        } else {
+            $response = [
+                'status' => false
+            ];
+        }
+
+        return response()->json($response);
     }
 
     public function askQuestion(Request $request, $id)

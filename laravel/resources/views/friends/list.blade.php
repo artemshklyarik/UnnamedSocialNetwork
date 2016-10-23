@@ -1,96 +1,146 @@
 @extends('layout.app')
 @section('content')
-    <div class="content center">
-        <div class="col-md-3 left-panel">
-            <p>
-                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                <a href="/" id="my-page">My page
-                    @if(count($newQuestions))
-                        <span class="badge">{!! count($newQuestions) !!}</span>
+    <div class="overlay">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="row nm">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                {!! csrf_field() !!}
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#friends" data-toggle="tab">Friends <span class="pull-right badge bg-aqua">{!! count($friends['all']) !!}</span></a></li>
+                    @if (!$owner)
+                        <li><a href="#mutual" data-toggle="tab">mutual friends <span class="pull-right badge bg-aqua">{!! count($friends['mutual']) !!}</span></a></li>
+                    @else
+                        <li><a href="#requests" data-toggle="tab">Requests to friends <span class="pull-right badge bg-aqua">{!! count($friends['requests']) !!}</span></a></li>
                     @endif
-                </a>
-                <a href="/edit_profile" id="edit-profile">edit profile</a>
-            </p>
-            <p>
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                <a href="/friends" id="my-friends">My friends
+                </ul>
 
-                    @if(isset($friends['requests']) && count($friends['requests']))
-                        <span class="badge">{!! count($friends['requests']) !!}</span>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="friends">
+                        <div class="row nm">
+                            @foreach($friends['all'] as $friend)
+                                <div class="col-md-3">
+                                    <!-- Widget: user widget style 1 -->
+                                    <div class="box box-widget widget-user-2">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <a href="/user/{!! $friend->userInfo['id'] !!}">
+                                            @if ($friend->userInfo['gender'] == 'male')
+                                                <div class="widget-user-header bg-aqua">
+                                            @elseif ($friend->userInfo['gender'] == 'female')
+                                                <div class="widget-user-header bg-fuchsia">
+                                            @else
+                                                <div class="widget-user-header bg-yellow">
+                                            @endif
+                                                <div class="widget-user-image">
+                                                    <img class="img-circle" src="{!! $friend->userInfo['avatarLinkSmall'] !!}" alt="User Avatar">
+                                                </div>
+                                                <!-- /.widget-user-image -->
+                                                <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!}</h3>
+                                                <h5 class="widget-user-desc">{!! $friend->userInfo['status'] !!}</h5>
+                                            </div>
+                                        </a>
+                                        <div class="box-footer no-padding">
+                                            <ul class="nav nav-stacked">
+                                                <li><a href="/user/{!! $friend->userInfo['id'] !!}">Test information</a></li>
+                                                @if ($owner)
+                                                    <a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="{!! $friend->userInfo['id'] !!}">
+                                                        <b>Remove from friends</b>
+                                                    </a>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- /.widget-user -->
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @if ($owner)
+                        <div class="tab-pane" id="requests">
+                            <div class="row nm">
+                                @foreach($friends['requests'] as $friend)
+                                    <div class="col-md-3">
+                                        <!-- Widget: user widget style 1 -->
+                                        <div class="box box-widget widget-user-2">
+                                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                                            <a href="/user/{!! $friend->userInfo['id'] !!}">
+                                                @if ($friend->userInfo['gender'] == 'male')
+                                                    <div class="widget-user-header bg-aqua">
+                                                @elseif ($friend->userInfo['gender'] == 'female')
+                                                    <div class="widget-user-header bg-fuchsia">
+                                                @else
+                                                    <div class="widget-user-header bg-yellow">
+                                                @endif
+                                                    <div class="widget-user-image">
+                                                        <img class="img-circle" src="{!! $friend->userInfo['avatarLinkSmall'] !!}" alt="User Avatar">
+                                                    </div>
+                                                    <!-- /.widget-user-image -->
+                                                    <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!}</h3>
+                                                    <h5 class="widget-user-desc">{!! $friend->userInfo['status'] !!}</h5>
+                                                </div>
+                                            </a>
+                                            <div class="box-footer no-padding">
+                                                <ul class="nav nav-stacked">
+                                                    <li><a href="/user/{!! $friend->userInfo['id'] !!}">Test information</a></li>
+                                                    <a href="{!! route('accept_request_friend') !!}" class="ajax-friends-list btn btn-primary btn-block" data-friend="{!! $friend->userInfo['id'] !!}">
+                                                        <b>Add to friends</b>
+                                                    </a>
+                                                    <a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="{!! $friend->userInfo['id'] !!}">
+                                                        <b>Reject</b>
+                                                    </a>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!-- /.widget-user -->
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     @endif
-                </a>
-            </p>
-        </div>
-
-        <div class="col-md-9 friends-list left">
-            @if(count($friends["requests"]))
-                <h5>New requests</h5>
-                <div class="row nm requests">
-                    <div class="col-xs-12 np">
-                        @foreach($friends["requests"] as $friend)
-                            <div class="row nm friend">
-                                <div class="col-md-2 photo np">
-                                    <a href="user/{!! $friend->user_id !!}" class="thumbnail">
-                                        <img src="{!! $friend->userInfo["avatarLinkSmall"] !!}"/>
-                                    </a>
-                                </div>
-                                <div class="col-md-6 col-xs-offset-1 ">
-                                    <div class="row nm">
-                                        <a href="user/{!! $friend->user_id !!}">
-                                            <h4>{!! $friend->userName !!}</h4>
-                                        </a>
+                    @if(!$owner)
+                        <div class="tab-pane" id="mutual">
+                            <div class="row nm">
+                                @foreach($friends['mutual'] as $friend)
+                                    <div class="col-md-3">
+                                        <!-- Widget: user widget style 1 -->
+                                        <div class="box box-widget widget-user-2">
+                                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                                            <a href="/user/{!! $friend->userInfo['id'] !!}">
+                                                @if ($friend->userInfo['gender'] == 'male')
+                                                    <div class="widget-user-header bg-aqua">
+                                                @elseif ($friend->userInfo['gender'] == 'female')
+                                                    <div class="widget-user-header bg-fuchsia">
+                                                @else
+                                                    <div class="widget-user-header bg-yellow">
+                                                @endif
+                                                <div class="widget-user-image">
+                                                    <img class="img-circle" src="{!! $friend->userInfo['avatarLinkSmall'] !!}" alt="User Avatar">
+                                                </div>
+                                                    <!-- /.widget-user-image -->
+                                                    <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!}</h3>
+                                                    <h5 class="widget-user-desc">{!! $friend->userInfo['status'] !!}</h5>
+                                                </div>
+                                            </a>
+                                            <div class="box-footer no-padding">
+                                                <ul class="nav nav-stacked">
+                                                    <li><a href="/user/{!! $friend->userInfo['id'] !!}">Test information</a></li>
+                                                    @if ($owner)
+                                                        <a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="{!! $friend->userInfo['id'] !!}">
+                                                            <b>Remove from friends</b>
+                                                        </a>
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!-- /.widget-user -->
                                     </div>
-                                    <div class="row nm">
-                                        @if($owner)
-                                            {!! csrf_field() !!}
-                                            <button type="button" class="btn btn-primary" id="accept_request_friend"
-                                                    data-friend-accept="{!! $friend->user_id !!}">Add to friends
-                                            </button>
-                                            <button type="button" class="btn btn-danger" id="reject_request_friend"
-                                                    data-friend-reject="{!! $friend->user_id !!}">Reject
-                                            </button>
-                                        @endif
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endif
                 </div>
-            @endif
-
-            @if(count($friends["all"]))
-                <h5>Friends</h5>
-                <div class="row nm friends">
-                    <div class="col-xs-12">
-                        @foreach($friends["all"] as $friend)
-                            <div class="row nm friend">
-                                <div class="col-md-2 photo np">
-                                    <a href="user/{!! $friend->user_id !!}" class="thumbnail">
-                                        <img src="{!! $friend->userInfo["avatarLinkSmall"] !!}"/>
-                                    </a>
-                                </div>
-                                <div class="col-md-6 col-xs-offset-1 ">
-                                    <div class="row nm">
-                                        <a href="user/{!! $friend->user_id !!}">
-                                            <h4>{!! $friend->userName !!}</h4>
-                                        </a>
-                                    </div>
-                                    <div class="row nm">
-                                        @if($owner)
-                                            {!! csrf_field() !!}
-                                            <button type="button" class="btn btn-danger" id="removefriend"
-                                                    data-friend-remove="{!! $friend->user_id !!}">Remove friend
-                                            </button>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @else
-                <h5>You haven't friends</h5>
-            @endif
+            </div>
         </div>
     </div>
 @endsection
