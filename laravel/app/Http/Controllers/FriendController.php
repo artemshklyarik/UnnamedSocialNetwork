@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Friend;
+use App\User;
 use App\Question;
 use App\Http\Requests;
 
@@ -13,19 +14,23 @@ class FriendController extends Controller
     {
         if (isset($request->id) && $request->id) {
             $userId = $request->id;
+            $authUserId = $request->user()->id;
             $owner = false;
+            $friends = Friend::getUserFriends($userId, $authUserId);
         } else {
             $userId = $request->user()->id;
             $owner = true;
+            $friends = Friend::getUserFriends($userId);
         }
-        $friends = Friend::getUserFriends($userId);
         $newQuestions = Question::getNewQuestions($request->user()->id);
         $questions = Question::getQuestions($request->user()->id);
+        $userInfo = User::getUserInfo($request->user()->id);
 
         return view('friends/list', [
             'owner' => $owner,
             'newQuestions' => $newQuestions,
-            'Questions' => $questions,
+            'questions' => $questions,
+            'authUserInfo' => $userInfo,
             'friends' => $friends
         ]);
     }
@@ -37,11 +42,11 @@ class FriendController extends Controller
 
         if (Friend::sendFriendRequest($idFrom, $idTo)) {
             $response = [
-                'status' => 'success'
+                'status' => true
             ];
         } else {
             $response = [
-                'status' => 'error'
+                'status' => false
             ];
         }
 
@@ -54,7 +59,7 @@ class FriendController extends Controller
         $idTo = $request->requestId;
 
         $response = [
-            'status' => Friend::acceptFriendRequest($idFrom, $idTo)
+            'status' => Friend::acceptFriendRequest($idFrom, $idTo),
         ];
 
         return response()->json($response);

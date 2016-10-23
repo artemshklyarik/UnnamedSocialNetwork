@@ -1,70 +1,76 @@
 @extends('layout.app')
 @section('content')
-    <div class="content">
-        <div class="col-md-6 info-group">
-            <div class="row center">
-                <img src="{{ asset('assets/img/author.jpg') }}" alt="artem shklyiarik">
+    <div class="container">
+        <div class="row nm page-form">
+            <div class="col-md-6">
+                <div class="row text">
+                    Hello, my name is Artem Shklyarik.
+                    Welcome to my pet project.
+                    It is an unnamed Social Network.
+                    I have not decided what audience it will be target on and then it can be anything in future.
+                    I do not persecute any goal, there is only the idea to create something new.
+                    I will be glad to any help, so you can send me your suggestions to
+                    <a href="https://twitter.com/tema_johnson" target="_blank">Twitter</a>
+                    or
+                    <a href="https://www.linkedin.com/in/artem-shklyarik-bb2b14120" target="_blank">LinkedIn</a>
+                </div>
             </div>
-            <div class="row">
-                Hello, my name is Artem Shklyarik.
-                Welcome to my pet project.
-                It is an unnamed Social Network.
-                I have not decided what audience it will be target on and then it can be anything in future.
-                I do not persecute any goal, there is only the idea to create something new.
-                I will be glad to any help, so you can send me your suggestions to
-                <a href="https://twitter.com/tema_johnson" target="_blank">Twitter</a>
-                or
-                <a href="https://www.linkedin.com/in/artem-shklyarik-bb2b14120" target="_blank">LinkedIn</a>
-            </div>
-        </div>
-        <div class="col-md-6 form-group">
-            <div class="auth">
-                <form method="POST" action="/auth/register">
-                    {!! csrf_field() !!}
-                    <div class="row">
-                        @if (count($errors))
-                            <ul>
+            <div class="col-md-6">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Registration</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form action="/auth/register" method="post" class="form-horizontal">
+                        {!! csrf_field() !!}
+                        <div class="box-body">
+                            @if (count($errors))
                                 @foreach($errors->all() as $error)
-                                    <p class="error">{{ $error }}</p>
+                                    <p class="text-red"><span>{!! $error !!}</span></p>
                                 @endforeach
-                            </ul>
-                        @endif
-                    </div>
-                    <div class="row">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="login">n</span>
-                            <input name="name" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" value="{{ old('name') }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="login">@</span>
-                            <input name="email" type="email" class="form-control" placeholder="Email" aria-describedby="basic-addon1" value="{{ old('email') }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="login">p</span>
-                            <input name="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="login">p</span>
-                            <input name="password_confirmation" type="password" class="form-control" placeholder="Password Confirmation" aria-describedby="basic-addon1">
-                        </div>
-                    </div>
+                            @endif
 
-                    <div>
-                        <div class="col-md-6">
-                            <button class="btn btn-default" type="submit">Register</button>
-                        </div>
-                        <div class="col-md-6 right">
-                            <a href="/">Return to Log In page</a>
-                        </div>
-                    </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-2 control-label">Name</label>
 
-                </form>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" class="form-control" id="inputName" placeholder="Name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                                <div class="col-sm-10">
+                                    <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+
+                                <div class="col-sm-10">
+                                    <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPassword34" class="col-sm-2 control-label">Password confirm</label>
+
+                                <div class="col-sm-10">
+                                    <input type="password" name="password_confirmation" class="form-control" id="inputPassword34" placeholder="Password confirm">
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <a href="/">Log in</a>
+                            <button type="submit" class="btn btn-info pull-right">Register</button>
+                        </div>
+                        <!-- /.box-footer -->
+                    </form>
+                </div>
             </div>
         </div>
     </div>
