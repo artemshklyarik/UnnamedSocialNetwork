@@ -96,7 +96,7 @@ $(document).ready(function() {
     });
     //end remove question
     //friend list ajax
-    $("a.ajax-friends-list").on( "click", function() {
+    $("body").on( "click", "a.ajax-friends-list", function() {
         event.preventDefault();
         loader.show();
         var url   = $(this).attr('href');
@@ -107,10 +107,31 @@ $(document).ready(function() {
             type: "post",
             url: url,
             data: "requestId=" + id + "&_token=" + token,
-            success: function(data){
+            success: function(data) {
+                $('.main-sidebar').load('/friends .sidebar');
+                $('#friends-block').load('/friends #friends-block-inner');
+
                 loader.hide();
             }
         });
     });
     //end friend list ajax
+
+    //js friends filter
+    $("body").on( "change", ".filter-block select", function() {
+        var value = $(this).val();
+        var id = $(this).attr('id');
+        var dataElement = 'data-' + id;
+
+        if (value == "") {
+            $('#friends .user').show();
+        } else {
+            $('#friends .user').hide();
+            $('#friends .user[' + dataElement + '="' + value + '"]').each(function(i,elem) {
+                $(this).show();
+            });
+        }
+
+    });
+    //end friends filter
 });

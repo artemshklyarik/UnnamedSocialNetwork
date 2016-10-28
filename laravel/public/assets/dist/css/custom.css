@@ -61,9 +61,20 @@ span.pull-right.badge.bg-aqua {
     display: none;
     background: rgba(255, 255, 255, .75);
 }
+    .overlay i {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+    }
 
 .user-panel>.image>img {
     height: 45px;
+}
+
+.filter-block {
+    margin-bottom: 45px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0,0,0,.15);
 }
 
 .widget-user-2 .widget-user-image>img {

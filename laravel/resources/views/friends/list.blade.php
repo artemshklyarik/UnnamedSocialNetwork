@@ -3,8 +3,19 @@
     <div class="overlay">
         <i class="fa fa-refresh fa-spin"></i>
     </div>
+
     <div class="row nm">
         <div class="col-md-12">
+            @if ($owner)
+                <h3><a href="user/{!! $authUserInfo['id'] !!}">{!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}</a> friends</h3>
+            @else
+                <h3><a href="user/{!! $userInfo['id'] !!}">{!! $userInfo['name'] !!} {!! $userInfo['second_name'] !!}</a> friends</h3>
+            @endif
+        </div>
+    </div>
+
+    <div class="row nm" id="friends-block">
+        <div class="col-md-12" id="friends-block-inner">
             <div class="nav-tabs-custom">
                 {!! csrf_field() !!}
                 <ul class="nav nav-tabs">
@@ -18,9 +29,22 @@
 
                 <div class="tab-content">
                     <div class="active tab-pane" id="friends">
+                        <div class="row nm filter-block">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select id="gender" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                        <option value="" selected="selected">Any</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row nm">
                             @foreach($friends['all'] as $friend)
-                                <div class="col-md-3">
+                                <div class="col-md-3 user" data-gender="{!! $friend->userInfo['gender'] !!}">
                                     <!-- Widget: user widget style 1 -->
                                     <div class="box box-widget widget-user-2">
                                         <!-- Add the bg color to the header using any of the bg-* classes -->
