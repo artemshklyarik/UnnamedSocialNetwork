@@ -7,7 +7,7 @@
                 <img src="{!! $authUserInfo['avatarLinkSmall'] !!}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{!! $authUserInfo['name'] !!}</p>
+                <p>{!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}</p>
             </div>
         </div><!-- /.user-panel -->
 

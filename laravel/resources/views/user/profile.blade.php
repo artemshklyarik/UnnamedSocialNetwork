@@ -17,7 +17,7 @@
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle" src="{!! $userInfo['avatarLink'] !!}" alt="User profile picture">
 
-                        <h3 class="profile-username text-center">{!! $userInfo['name'] !!}</h3>
+                        <h3 class="profile-username text-center">{!! $userInfo['name'] !!}  {!! $userInfo['second_name'] !!}</h3>
 
                         <p class="text-muted text-center">{!! $userInfo['status'] !!}</p>
 
@@ -107,7 +107,7 @@
                                                 @if ($question->anonimous)
                                                     Anomimous
                                                 @else
-                                                    <a href="/user/{!! $question->question_man !!}">{!! $question->name !!}</a>
+                                                    <a href="/user/{!! $question->question_man !!}">{!! $question->name !!} {!! $question->second_name !!}</a>
                                                 @endif
                                                 @if(!isset($id))
                                                     <button type="button" href="user/question/remove" class="btn btn-box-tool remove-question" data-id="{!! $question->id !!}" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -145,7 +145,7 @@
                                                         Anonimous
                                                     @else
                                                         <a href="/user/{!! $question->question_man !!}">
-                                                            {!! $question->name !!}
+                                                            {!! $question->name !!} {!! $question->second_name !!}
                                                         </a>
                                                     @endif
                                                 </div>

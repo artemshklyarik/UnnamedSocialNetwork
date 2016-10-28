@@ -122,6 +122,18 @@ class MainController extends Controller
         return Redirect::to('edit_profile');
     }
 
+    public function editGeneralUserInfo(Request $request)
+    {
+        $data = Input::all();
+        $userId = $request->user()->id;
+        $user = User::find($userId);
+        $user->name = $data['name'];
+        $user->second_name = $data['second_name'];
+        $user->save();
+
+        return Redirect::to('edit_profile');
+    }
+
     public function removeQuestion(Request $request)
     {
         $itemId = $request->requestId;

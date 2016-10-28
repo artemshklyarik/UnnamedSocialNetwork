@@ -51,6 +51,11 @@ Route::post('edit_profile/edit_user_info', [
     'as' => 'edit_user_info'
 ]);
 
+Route::post('edit_profile/edit_general_user_info', [
+    'uses' => 'MainController@editGeneralUserInfo',
+    'as' => 'edit_general_user_info'
+]);
+
 Route::post('friends/addfriend', [
     'uses' => 'FriendController@addFriend',
     'as' => 'add_friend'

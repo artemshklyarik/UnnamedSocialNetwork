@@ -94,6 +94,43 @@
             </div>
             <!-- /.box -->
         </div>
+
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">General user information</h3>
+                </div>
+                <div class="box-body">
+                    {!! Form::open(['route' => 'edit_general_user_info']) !!}
+                    {!! csrf_field() !!}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-4 title"><label>Name:</label></div>
+                            <div class="col-lg-6 field">
+                                <input type="text" name="name" class="form-control pull-right" value="{!! $userInfo['name'] !!}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-4 title"><label>Second name:</label></div>
+                            <div class="col-lg-6 field">
+                                <input type="text" name="second_name" class="form-control pull-right" value="{!! $userInfo['second_name'] !!}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row center">
+                            <div class="col-md-12">
+                                {!! Form::submit('Save information', ['class' => 'btn btn-default']) !!}
+                            </div>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
     </div>
 {{--    <div class="content edit_profile">
         <div class="row nm center toplink">
