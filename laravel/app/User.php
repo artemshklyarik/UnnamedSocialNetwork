@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'second_name'
     ];
 
     /**
@@ -57,6 +57,7 @@ class User extends Authenticatable
 
         $userInfo['id']   = $userId;
         $userInfo['name'] = $select->name;
+        $userInfo['second_name'] = $select->second_name;
 
         //get User avatar link
         $select = DB::table('users_info')

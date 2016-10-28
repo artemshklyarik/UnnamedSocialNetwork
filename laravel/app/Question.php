@@ -18,7 +18,7 @@ class Question extends Model
             ->join('users', 'users.id', '=', 'questions.question_man')
             ->where('answer_man', '=', $userId)
             ->where('answered', '=', 0)
-            ->select('questions.*', 'users.name')
+            ->select('questions.*', 'users.name', 'users.second_name')
             ->get();
 
         return $newQuestions;
@@ -34,7 +34,7 @@ class Question extends Model
             ->join('users', 'users.id', '=', 'questions.question_man')
             ->where('answer_man', '=', $userId)
             ->where('answered', '=', 1)
-            ->select('questions.*', 'users.name')
+            ->select('questions.*', 'users.name', 'users.second_name')
             ->get();
 
         return $newQuestions;

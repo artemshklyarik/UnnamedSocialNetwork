@@ -36,7 +36,7 @@
                                                     <img class="img-circle" src="{!! $friend->userInfo['avatarLinkSmall'] !!}" alt="User Avatar">
                                                 </div>
                                                 <!-- /.widget-user-image -->
-                                                <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!}</h3>
+                                                <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!} {!! $friend->userInfo['second_name'] !!}</h3>
                                                 <h5 class="widget-user-desc">{!! $friend->userInfo['status'] !!}</h5>
                                             </div>
                                         </a>
@@ -76,7 +76,7 @@
                                                         <img class="img-circle" src="{!! $friend->userInfo['avatarLinkSmall'] !!}" alt="User Avatar">
                                                     </div>
                                                     <!-- /.widget-user-image -->
-                                                    <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!}</h3>
+                                                    <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!} {!! $friend->userInfo['second_name'] !!}</h3>
                                                     <h5 class="widget-user-desc">{!! $friend->userInfo['status'] !!}</h5>
                                                 </div>
                                             </a>
@@ -118,7 +118,7 @@
                                                     <img class="img-circle" src="{!! $friend->userInfo['avatarLinkSmall'] !!}" alt="User Avatar">
                                                 </div>
                                                     <!-- /.widget-user-image -->
-                                                    <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!}</h3>
+                                                    <h3 class="widget-user-username">{!! $friend->userInfo['name'] !!} {!! $friend->userInfo['second_name'] !!}</h3>
                                                     <h5 class="widget-user-desc">{!! $friend->userInfo['status'] !!}</h5>
                                                 </div>
                                             </a>

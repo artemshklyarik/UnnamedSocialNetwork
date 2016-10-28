@@ -40,6 +40,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="inputSecondName" class="col-sm-2 control-label">Second name</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="second_name" class="form-control" id="inputSecondName" placeholder="Second name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 
                                 <div class="col-sm-10">

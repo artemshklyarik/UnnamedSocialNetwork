@@ -17,14 +17,14 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{!! $authUserInfo['avatarLinkSmall'] !!}" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{!! $authUserInfo['name'] !!}</span>
+                            <span class="hidden-xs">{!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 <img src="{!! $authUserInfo['avatarLinkSmall'] !!}" class="img-circle" alt="User Image">
                                 <p>
-                                    {!! $authUserInfo['name'] !!}
+                                    {!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}
                                     <small>{!! $authUserInfo['date_of_birthday'] !!}</small>
                                 </p>
                             </li>
