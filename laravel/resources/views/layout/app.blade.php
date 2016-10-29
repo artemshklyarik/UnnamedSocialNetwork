@@ -23,5 +23,6 @@
 
         @include('layout.footer')
         @include('layout.footer_scripts')
+        @yield('custom_js')
     </body>
 </html>

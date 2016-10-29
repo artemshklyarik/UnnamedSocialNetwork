@@ -81,3 +81,9 @@ Route::get('friends', [
     'uses' => 'FriendController@userFriends',
     'as' => 'user_friends'
 ]);
+
+Route::get('friends/ajax', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'FriendController@userFriendsAjax',
+    'as' => 'user_friends_ajax'
+]);
