@@ -27,16 +27,14 @@ class MainController extends Controller
             $newQuestions = Question::getNewQuestions($userId);
             $questions = Question::getQuestions($userId);
             $userInfo = User::getUserInfo($userId);
-            $friends = Friend::getUserFriends($userId);
-
-            shuffle($friends['all']);
+            $friendsCount = Friend::getUserFriendsCount($userId);
 
             return view('user/profile', [
                 'newQuestions' => $newQuestions,
                 'questions' => $questions,
                 'userInfo' => $userInfo,
                 'authUserInfo' => $userInfo,
-                'friends' => $friends
+                'friendsCount' => $friendsCount
             ]);
         } else {
             return view('auth.auth');
@@ -52,8 +50,7 @@ class MainController extends Controller
         $authUserInfo = User::getUserInfo($userId);
         $isfriend = Friend::isfriend($request->user()->id, $id);
         $friends = Friend::getUserFriends($id);
-
-        shuffle($friends['all']);
+        $friendsCount = Friend::getUserFriendsCount($request->user()->id, $id);
 
         return view('user/profile', [
             'id' => $id,
@@ -62,7 +59,7 @@ class MainController extends Controller
             'userInfo' => $userInfo,
             'authUserInfo' => $authUserInfo,
             'isfriend' => $isfriend,
-            'friends' => $friends
+            'friendsCount' => $friendsCount
         ]);
     }
 

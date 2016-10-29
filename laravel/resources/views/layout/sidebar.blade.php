@@ -31,12 +31,12 @@
                 </a>
             </li>
 
-            <li>
+            <li id="friends">
                 <a href="{{route('user_friends')}}">
                     <span>Friends</span>
                     <span class="pull-right-container">
-                        @if(isset($friends['requests']))
-                            <small class="label pull-right bg-yellow">{!! count($friends['requests']) !!}</small>
+                        @if(isset($friendsCount['request']))
+                            <small class="label pull-right bg-yellow">{!! $friendsCount['request'] !!}</small>
                         @endif
                     </span>
                 </a>

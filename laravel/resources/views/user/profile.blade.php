@@ -24,9 +24,9 @@
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
                                 @if (!isset($id))
-                                    <b>Friends</b> <a href="/friends" class="pull-right">{!! count($friends['all']) !!}</a>
+                                    <b>Friends</b> <a href="/friends" class="pull-right">{!! $friendsCount['all'] !!}</a>
                                 @else
-                                    <b>Friends</b> <a href="/friends?id={!! $id !!}" class="pull-right">{!! count($friends['all']) !!}</a>
+                                    <b>Friends</b> <a href="/friends?id={!! $id !!}" class="pull-right">{!! $friendsCount['all'] !!}</a>
                                 @endif
 
                             </li>

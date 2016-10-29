@@ -90,12 +90,56 @@ class User extends Authenticatable
             $userInfo['avatarLink']         = asset('assets/img/defaultAvatar.jpg');
             $userInfo['avatarLinkSmall']    = asset('assets/img/defaultAvatar.jpg');
             $userInfo['avatarLinkOriginal'] = asset('assets/img/defaultAvatar.jpg');
-            $userInfo['gender'] = '';
-            $userInfo['date_of_birthday'] = '';
-            $userInfo['status'] = '';
+            $userInfo['gender']             = '';
+            $userInfo['date_of_birthday']   = '';
+            $userInfo['status']             = '';
         }
 
         return $userInfo;
+    }
+
+    public static function getCustomUsersInfo($usersIds, $limit = null, $offset = null, $filters = null)
+    {
+        $users = DB::table('users')
+            ->leftJoin('users_info', 'users.id', '=', 'users_info.id')
+            ->whereIn('users.id', $usersIds);
+        if ($filters) {
+            foreach ($filters as $key => $value) {
+                $users = $users->where('users_info.gender', '=', $value);
+            }
+        }
+
+        $users = $users->select('users_info.*', 'users.id', 'users.name', 'users.second_name');
+
+        if ($limit) {
+            $users = $users->offset($offset)
+                ->limit($limit);
+        }
+
+        $users = $users->get();
+
+        if ($users) {
+            foreach ($users as &$user) {
+
+                if ($user->avatar_link && file_exists('uploads/medium/' . $user->avatar_link)) {
+                    $user->smallAvatarLink = asset('uploads/small/' . $user->avatar_link);
+                    $user->mediumAvatarLink = asset('uploads/medium/' . $user->avatar_link);
+                    $user->avatarLink = asset('uploads/original/' . $user->avatar_link);
+                } else {
+                    $user->smallAvatarLink = asset('assets/img/defaultAvatar.jpg');
+                    $user->mediumAvatarLink = asset('assets/img/defaultAvatar.jpg');
+                    $user->avatarLink = asset('assets/img/defaultAvatar.jpg');
+                }
+
+                foreach($user as $key => $value) {
+                    if (!$value) {
+                        $user->$key = '';
+                    }
+                }
+            }
+        }
+
+        return $users;
     }
 
     public static function deletePreviewPhoto($userId)
