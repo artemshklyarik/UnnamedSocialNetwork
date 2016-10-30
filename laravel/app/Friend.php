@@ -182,8 +182,11 @@ class Friend extends Model
             $requestsIds[] = $item->user_id;
         }
 
-        $requests = User::getCustomUsersInfo($requestsIds);
-
+        if (isset($params['filters'])) {
+            $requests = User::getCustomUsersInfo($requestsIds, $limit, $offset, $params['filters']);
+        } else {
+            $requests = User::getCustomUsersInfo($requestsIds, $limit, $offset);
+        }
 
         return $requests;
     }

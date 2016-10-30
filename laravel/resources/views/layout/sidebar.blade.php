@@ -31,7 +31,7 @@
                 </a>
             </li>
 
-            <li id="friends">
+            <li id="friends-sidebar">
                 <a href="{{route('user_friends')}}">
                     <span>Friends</span>
                     <span class="pull-right-container">

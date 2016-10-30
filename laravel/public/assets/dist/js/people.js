@@ -11,7 +11,7 @@ var isRefresh              = false; //true, false - Refresh all block after ajax
 var action                 = null; //accept, remove
 
 $(document).ready(function() {
-    $('.sidebar-menu li#friends').addClass('active');
+    $('.sidebar-menu li#friends-sidebar').addClass('active');
 
     loader.show();
     makeRequest();
@@ -88,11 +88,25 @@ function makeRequest() {
         tempUrl += '&userId=' + userId;
     }
 
-    $('.filter-block select').each(function() {
-        if ($(this).val() != '') {
-            tempUrl += '&' + $(this).attr('id') + '=' + $(this).val();
-        }
-    })
+    if (scope == 'general') {
+        $('#friends .filter-block select').each(function() {
+            if ($(this).val() != '') {
+                tempUrl += '&' + $(this).attr('id') + '=' + $(this).val();
+            }
+        })
+    } else if (scope == 'requests') {
+        $('#requests .filter-block select').each(function() {
+            if ($(this).val() != '') {
+                tempUrl += '&' + $(this).attr('id') + '=' + $(this).val();
+            }
+        })
+    } else if (scope == 'mutual') {
+        $('#mutual .filter-block select').each(function() {
+            if ($(this).val() != '') {
+                 tempUrl += '&' + $(this).attr('id') + '=' + $(this).val();
+            }
+        })
+    }
 
     $.ajax({
         type: "get",

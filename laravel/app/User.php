@@ -105,7 +105,7 @@ class User extends Authenticatable
             ->whereIn('users.id', $usersIds);
         if ($filters) {
             foreach ($filters as $key => $value) {
-                $users = $users->where('users_info.gender', '=', $value);
+                $users = $users->where('users_info.' . $key, '=', $value);
             }
         }
 
