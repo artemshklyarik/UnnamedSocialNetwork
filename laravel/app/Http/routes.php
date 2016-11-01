@@ -71,6 +71,18 @@ Route::post('friends/reject_request_friend', [
     'as' => 'reject_request_friend'
 ]);
 
+Route::get('search/people', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'SearchController@searchPeople',
+    'as' => 'search_people'
+]);
+
+Route::get('search/people/ajax', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'SearchController@searchPeopleAjax',
+    'as' => 'search_people_ajax'
+]);
+
 Route::post('friends/remove_friend', [
     'uses' => 'FriendController@rejectRequestFriend',
     'as' => 'remove_friend'

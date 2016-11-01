@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use DB;
-
+use App\Filter;
 use Carbon\Carbon;
 
 
@@ -98,14 +98,61 @@ class User extends Authenticatable
         return $userInfo;
     }
 
-    public static function getCustomUsersInfo($usersIds, $limit = null, $offset = null, $filters = null)
+    public static function getAllUsersIdsArray($ownerId = null)
+    {
+        $usersIds = array();
+        $users = DB::table('users')
+            ->select('id');
+
+        if ($ownerId) {
+            $users = $users
+                ->where('id', '<>', $ownerId);
+        }
+
+        $users = $users->get();
+
+        foreach ($users as $user) {
+            $usersIds[] = $user->id;
+        }
+
+        return $usersIds;
+    }
+
+    public static function getCustomUsersInfo($usersIds, $limit = null, $offset = null, $filters = null, $q = null)
     {
         $users = DB::table('users')
             ->leftJoin('users_info', 'users.id', '=', 'users_info.id')
             ->whereIn('users.id', $usersIds);
+
         if ($filters) {
             foreach ($filters as $key => $value) {
                 $users = $users->where('users_info.' . $key, '=', $value);
+            }
+        }
+
+        if ($q) {
+
+            $q = explode(' ' , $q);
+
+            if (count($q) == 1) {
+                $users = $users->where(function ($users) use ($q) {
+                    $users->where('users.name', 'like', $q[0] . '%')
+                        ->orWhere('users.second_name', 'like', $q[0] . '%');
+                });
+            } else if (count($q) == 2) {
+                $users = $users->where(function ($users) use ($q) {
+                    $users = $users->where(function ($users) use ($q) {
+                        $users->where('users.name', 'like', $q[0] . '%')
+                            ->where('users.second_name', 'like', $q[1] . '%');
+                    });
+
+                    $users = $users->orWhere(function ($users) use ($q) {
+                        $users->where('users.name', 'like', $q[1] . '%')
+                            ->where('users.second_name', 'like', $q[0] . '%');
+                    });
+                });
+            } else {
+                return false;
             }
         }
 

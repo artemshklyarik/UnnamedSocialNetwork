@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\User;
-use App\Question;
 use Illuminate\Support\Facades\Auth;
 
 class Friend extends Model

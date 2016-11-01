@@ -3,10 +3,12 @@ var scope                  = $('#scope').val();
 var page                   = 1;
 var ownerId                = $('#idOwner').val();
 var userId                 = $('#idUser').val();
-var url                    = 'friends/ajax';
+var url                    = $('#url').val();
 var showMoreFriends        = $('button#showMoreFriends');
 var showMoreRequests       = $('button#showMoreRequests');
 var showMoreMutualFriends  = $('button#showMoreMutualFriends');
+var showMorePeople         = $('button#showMorePeople');
+
 var isRefresh              = false; //true, false - Refresh all block after ajax
 var action                 = null; //accept, remove
 
@@ -47,7 +49,12 @@ $(document).ready(function() {
         loader.show();
         makeRequest();
     });
-
+    showMorePeople.click(function() {
+        page++;
+        isRefresh = false;
+        loader.show();
+        makeRequest();
+    });
     $("body").on("click", 'a[href="#friends"]', function() {
         scope = 'general';
         page = 1;
@@ -69,6 +76,13 @@ $(document).ready(function() {
         page = 1;
         isRefresh = true;
 
+        makeRequest();
+    });
+
+    $("body").on("keyup", 'input[name="q"]', function() {
+        debugger;
+        page = 1;
+        isRefresh = true;
         makeRequest();
     });
 });
@@ -106,6 +120,17 @@ function makeRequest() {
                  tempUrl += '&' + $(this).attr('id') + '=' + $(this).val();
             }
         })
+    } else {
+        $('#search .filter-block select').each(function() {
+            var query = $('#name').val();
+            if (query != '') {
+                tempUrl += '&q=' + query;
+            }
+
+            if ($(this).val() != '') {
+                 tempUrl += '&' + $(this).attr('id') + '=' + $(this).val();
+            }
+        })
     }
 
     $.ajax({
@@ -133,6 +158,10 @@ function reloadData(data) {
 
     if (scope == 'mutual') {
         renderMutualFriends(data);
+    }
+
+    if (scope == 'search') {
+        renderSearchPeople(data);
     }
 
     loader.hide();
@@ -163,7 +192,7 @@ function renderAllFriends (data) {
             '<img class="img-circle" src="' + item.smallAvatarLink + '" alt="User Avatar" />' +
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
-            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
+//            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
@@ -213,7 +242,7 @@ function renderRequests (data) {
             '<img class="img-circle" src="' + item.smallAvatarLink + '" alt="User Avatar" />' +
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
-            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
+//            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
@@ -276,7 +305,7 @@ function renderMutualFriends (data) {
             '<img class="img-circle" src="' + item.smallAvatarLink + '" alt="User Avatar" />' +
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
-            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
+//            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
@@ -298,5 +327,49 @@ function renderMutualFriends (data) {
         showMoreMutualFriends.hide();
     } else {
         showMoreMutualFriends.show();
+    }
+}
+
+function renderSearchPeople (data) {
+    var allPeople = $('#all-people');
+
+    if (isRefresh) {
+        allPeople.html('');
+    }
+
+    data.forEach(function(item) {
+        var html;
+
+        html = '<div class="col-md-3 user" data-gender="' + item.gender + '">' +
+            '<div class="box box-widget widget-user-2">' +
+            '<a href="/user/' + item.id + '">';
+            if (item.gender == 'male') {
+                html += '<div class="widget-user-header bg-aqua">';
+            } else if (item.gender == 'female') {
+                html += '<div class="widget-user-header bg-fuchsia">';
+            } else {
+                html += '<div class="widget-user-header bg-yellow">';
+            }
+
+        html += '<div class="widget-user-image">' +
+            '<img class="img-circle" src="' + item.smallAvatarLink + '" alt="User Avatar" />' +
+            '</div>' +
+            '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
+//            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
+            '</div>' +
+            '</a>' +
+            '<div class="box-footer no-padding">' +
+            '<ul class="nav nav-stacked">' +
+            '<li><a href="' + item.id + '">Test information</a></li>';
+
+            html += '</ul></div></div></div>';
+
+        allPeople.append(html);
+    });
+
+    if (data.length < 20) {
+        showMorePeople.hide();
+    } else {
+        showMorePeople.show();
     }
 }

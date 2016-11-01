@@ -9,6 +9,7 @@ use App\Question;
 use App\Http\Requests;
 use View;
 
+
 class FriendController extends Controller
 {
     public function userFriendsAjax(Request $request)

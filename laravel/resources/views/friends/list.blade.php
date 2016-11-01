@@ -18,6 +18,7 @@
         <div class="col-md-12" id="friends-block-inner">
             <div class="nav-tabs-custom">
                 {!! csrf_field() !!}
+                <input type="hidden" name="url" id="url" value="{!! route('user_friends_ajax') !!}" />
                 @if ($owner)
                     <input type="hidden" name="id_owner" id="idOwner" value="{!! $authUserInfo['id'] !!}" />
                 @else
