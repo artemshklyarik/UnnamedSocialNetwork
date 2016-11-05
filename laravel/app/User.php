@@ -86,6 +86,16 @@ class User extends Authenticatable
 
             $userInfo['date_of_birthday'] = $select->date_of_birthday;
             $userInfo['status'] = $select->status;
+
+            if ($select->thumbnail) {
+                $userInfo['thumbnail'] = unserialize($select->thumbnail);
+            } else {
+                $userInfo['thumbnail']['offsetX'] = 0;
+                $userInfo['thumbnail']['offsetY'] = 0;
+                $userInfo['thumbnail']['sizeX'] = 100;
+                $userInfo['thumbnail']['sizeY'] = 100;
+            }
+
         } else {
             $userInfo['avatarLink']         = asset('assets/img/defaultAvatar.jpg');
             $userInfo['avatarLinkSmall']    = asset('assets/img/defaultAvatar.jpg');
@@ -93,6 +103,7 @@ class User extends Authenticatable
             $userInfo['gender']             = '';
             $userInfo['date_of_birthday']   = '';
             $userInfo['status']             = '';
+            $userInfo['thumbnail']          = '';
         }
 
         return $userInfo;
@@ -130,6 +141,7 @@ class User extends Authenticatable
             }
         }
 
+        //string search
         if ($q) {
 
             $q = explode(' ' , $q);
@@ -176,6 +188,15 @@ class User extends Authenticatable
                     $user->smallAvatarLink = asset('assets/img/defaultAvatar.jpg');
                     $user->mediumAvatarLink = asset('assets/img/defaultAvatar.jpg');
                     $user->avatarLink = asset('assets/img/defaultAvatar.jpg');
+                }
+
+                if ($user->thumbnail) {
+                    $user->thumbnail = unserialize($user->thumbnail);
+                } else {
+                    $user->thumbnail['sizeX']   = '100';
+                    $user->thumbnail['sizeY']   = '100';
+                    $user->thumbnail['offsetX'] = '0';
+                    $user->thumbnail['offsetY'] = '0';
                 }
 
                 foreach($user as $key => $value) {
@@ -232,5 +253,23 @@ class User extends Authenticatable
             DB::table('users_info')->insert($data);
         }
         return $userId;
+    }
+    public static function changeThumbnail($userId, $params)
+    {
+        $findUserInfo = DB::table('users_info')
+            ->where('id', $userId)
+            ->first();
+
+        if ($findUserInfo) {
+            DB::table('users_info')
+                ->where('id', $userId)
+                ->update(['thumbnail' => serialize($params)]);
+        } else {
+            DB::table('users_info')->insert(
+                ['id' => $userId, 'thumbnail' => serialize($params)]
+            );
+        }
+
+        return null;
     }
 }

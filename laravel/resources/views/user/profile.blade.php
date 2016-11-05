@@ -15,7 +15,13 @@
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{!! $userInfo['avatarLink'] !!}" alt="User profile picture">
+                        <div id="thumbnail">
+                            <img alt="thumbnail" src="{!! $userInfo['avatarLinkSmall'] !!}"/>
+                            <input type="hidden" id="sizeX" name="sizeX" value="{!! $userInfo['thumbnail']['sizeX'] !!}"/>
+                            <input type="hidden" id="sizeY" name="sizeY" value="{!! $userInfo['thumbnail']['sizeY'] !!}"/>
+                            <input type="hidden" id="offsetX" name="offsetX" value="{!! $userInfo['thumbnail']['offsetX'] !!}"/>
+                            <input type="hidden" id="offsetY" name="offsetY" value="{!! $userInfo['thumbnail']['offsetY'] !!}"/>
+                        </div>
 
                         <h3 class="profile-username text-center">{!! $userInfo['name'] !!}  {!! $userInfo['second_name'] !!}</h3>
 
@@ -206,3 +212,7 @@
     </section>
     <!-- /.content -->
 @endsection
+
+@section('custom_js')
+    <script src="{{ asset('assets/dist/js/profile.js') }}"></script>
+@stop

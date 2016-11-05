@@ -17,6 +17,7 @@ class FriendController extends Controller
         $params = array();
         $params['page'] = $request->page;
         $params['ownerId'] = $request->ownerId;
+        $params['userId'] = $request->userId;
         $scope = $request->scope;
         $friends = array();
 

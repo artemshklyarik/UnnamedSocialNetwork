@@ -194,4 +194,24 @@ class MainController extends Controller
 
         return redirect('/');
     }
+
+    public function saveThumbnailAjax(Request $request)
+    {
+        $userId = $request->user()->id;
+        $sizeX = $request->sizeX;
+        $sizeY = $request->sizeY;
+        $offsetX = $request->offsetX;
+        $offsetY = $request->offsetY;
+
+        $params = array();
+
+        $params['sizeX'] = $sizeX;
+        $params['sizeY'] = $sizeY;
+        $params['offsetX'] = $offsetX;
+        $params['offsetY'] = $offsetY;
+
+        User::changeThumbnail($userId, $params);
+
+        return null;
+    }
 }

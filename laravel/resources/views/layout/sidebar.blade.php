@@ -4,7 +4,13 @@
         <!-- user panel (Optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{!! $authUserInfo['avatarLinkSmall'] !!}" class="img-circle" alt="User Image">
+                <div id="sidebar-thumbnail" >
+                    <img alt="thumbnail" src="{!! $authUserInfo['avatarLinkSmall'] !!}"/>
+                    <input type="hidden" id="sizeX" name="sizeX" value="{!! $authUserInfo['thumbnail']['sizeX'] !!}"/>
+                    <input type="hidden" id="sizeY" name="sizeY" value="{!! $authUserInfo['thumbnail']['sizeY'] !!}"/>
+                    <input type="hidden" id="offsetX" name="offsetX" value="{!! $authUserInfo['thumbnail']['offsetX'] !!}"/>
+                    <input type="hidden" id="offsetY" name="offsetY" value="{!! $authUserInfo['thumbnail']['offsetY'] !!}"/>
+                </div>
             </div>
             <div class="pull-left info">
                 <p>{!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}</p>
