@@ -138,14 +138,26 @@ class Friend extends Model
             ->where('confirmed', '=', 1)
             ->get();
 
-        foreach ($friends['allTemp'] as $friend) {
-            if ($params['ownerId'] != $friend->user_id_1) {
-                $userId = $friend->user_id_1;
-            } else {
-                $userId = $friend->user_id_2;
-            }
+        if (isset($params['userId'])) {
+            foreach ($friends['allTemp'] as $friend) {
+                if ($params['userId'] != $friend->user_id_1 ) {
+                    $userId = $friend->user_id_1;
+                } else {
+                    $userId = $friend->user_id_2;
+                }
 
-            $allfriends[] = $userId;
+                $allfriends[] = $userId;
+            }
+        } else {
+            foreach ($friends['allTemp'] as $friend) {
+                if ($params['ownerId'] != $friend->user_id_1 ) {
+                    $userId = $friend->user_id_1;
+                } else {
+                    $userId = $friend->user_id_2;
+                }
+
+                $allfriends[] = $userId;
+            }
         }
 
         if (isset($params['filters'])) {

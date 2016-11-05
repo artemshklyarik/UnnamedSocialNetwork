@@ -41,6 +41,12 @@ Route::get('edit_profile', [
     'as' => 'edit_profile'
 ]);
 
+Route::get('edit_profile/save_thumbnail', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'MainController@saveThumbnailAjax',
+    'as' => 'save_thumbnail'
+]);
+
 Route::post('edit_profile/upload_photo', [
     'uses' => 'MainController@uploadPhoto',
     'as' => 'upload_photo'

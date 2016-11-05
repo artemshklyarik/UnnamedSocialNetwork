@@ -16,13 +16,25 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{!! $authUserInfo['avatarLinkSmall'] !!}" class="user-image" alt="User Image">
+                            <div id="thumbnail-header-small">
+                                <img alt="thumbnail" src="{!! $authUserInfo['avatarLinkSmall'] !!}"/>
+                                <input type="hidden" id="sizeX" name="sizeX" value="{!! $authUserInfo['thumbnail']['sizeX'] !!}"/>
+                                <input type="hidden" id="sizeY" name="sizeY" value="{!! $authUserInfo['thumbnail']['sizeY'] !!}"/>
+                                <input type="hidden" id="offsetX" name="offsetX" value="{!! $authUserInfo['thumbnail']['offsetX'] !!}"/>
+                                <input type="hidden" id="offsetY" name="offsetY" value="{!! $authUserInfo['thumbnail']['offsetY'] !!}"/>
+                            </div>
                             <span class="hidden-xs">{!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{!! $authUserInfo['avatarLinkSmall'] !!}" class="img-circle" alt="User Image">
+                                <div id="thumbnail-header-big">
+                                    <img alt="thumbnail" src="{!! $authUserInfo['avatarLinkSmall'] !!}"/>
+                                    <input type="hidden" id="sizeX" name="sizeX" value="{!! $authUserInfo['thumbnail']['sizeX'] !!}"/>
+                                    <input type="hidden" id="sizeY" name="sizeY" value="{!! $authUserInfo['thumbnail']['sizeY'] !!}"/>
+                                    <input type="hidden" id="offsetX" name="offsetX" value="{!! $authUserInfo['thumbnail']['offsetX'] !!}"/>
+                                    <input type="hidden" id="offsetY" name="offsetY" value="{!! $authUserInfo['thumbnail']['offsetY'] !!}"/>
+                                </div>
                                 <p>
                                     {!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}
                                     <small>{!! $authUserInfo['date_of_birthday'] !!}</small>

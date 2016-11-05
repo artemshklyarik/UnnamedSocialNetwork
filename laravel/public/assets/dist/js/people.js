@@ -80,7 +80,6 @@ $(document).ready(function() {
     });
 
     $("body").on("keyup", 'input[name="q"]', function() {
-        debugger;
         page = 1;
         isRefresh = true;
         makeRequest();
@@ -189,7 +188,14 @@ function renderAllFriends (data) {
             }
 
         html += '<div class="widget-user-image">' +
-            '<img class="img-circle" src="' + item.smallAvatarLink + '" alt="User Avatar" />' +
+            '<div id="thumbnail-friends">' +
+            '<img alt="thumbnail" src="' + item.smallAvatarLink + '"/>' +
+            '<input type="hidden" id="sizeX" name="sizeX" value="' + item.thumbnail.sizeX + '"/>' +
+            '<input type="hidden" id="sizeY" name="sizeY" value="' + item.thumbnail.sizeY + '"/>' +
+            '<input type="hidden" id="offsetX" name="offsetX" value="' + item.thumbnail.offsetX + '"/>' +
+            '<input type="hidden" id="offsetY" name="offsetY" value="' + item.thumbnail.offsetY + '"/>' +
+            '</div>' +
+
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
 //            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
@@ -209,6 +215,8 @@ function renderAllFriends (data) {
 
         allFrindsBlock.append(html);
     });
+
+    refreshAvatars();
 
     if (data.length < 20) {
         showMoreFriends.hide();
@@ -239,7 +247,14 @@ function renderRequests (data) {
             }
 
         html += '<div class="widget-user-image">' +
-            '<img class="img-circle" src="' + item.smallAvatarLink + '" alt="User Avatar" />' +
+            '<div id="thumbnail-friends">' +
+            '<img alt="thumbnail" src="' + item.smallAvatarLink + '"/>' +
+            '<input type="hidden" id="sizeX" name="sizeX" value="' + item.thumbnail.sizeX + '"/>' +
+            '<input type="hidden" id="sizeY" name="sizeY" value="' + item.thumbnail.sizeY + '"/>' +
+            '<input type="hidden" id="offsetX" name="offsetX" value="' + item.thumbnail.offsetX + '"/>' +
+            '<input type="hidden" id="offsetY" name="offsetY" value="' + item.thumbnail.offsetY + '"/>' +
+            '</div>' +
+
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
 //            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
@@ -262,13 +277,15 @@ function renderRequests (data) {
             html += '</ul></div></div></div>';
 
         allFrindsBlock.append(html);
-
-        if (data.length < 20) {
-            showMoreRequests.hide();
-        } else {
-            showMoreRequests.show();
-        }
     });
+
+    refreshAvatars();
+
+    if (data.length < 20) {
+        showMoreRequests.hide();
+    } else {
+        showMoreRequests.show();
+    }
 }
 
 function updateFriendsCounts (data) {
@@ -302,7 +319,14 @@ function renderMutualFriends (data) {
             }
 
         html += '<div class="widget-user-image">' +
-            '<img class="img-circle" src="' + item.smallAvatarLink + '" alt="User Avatar" />' +
+            '<div id="thumbnail-friends">' +
+            '<img alt="thumbnail" src="' + item.smallAvatarLink + '"/>' +
+            '<input type="hidden" id="sizeX" name="sizeX" value="' + item.thumbnail.sizeX + '"/>' +
+            '<input type="hidden" id="sizeY" name="sizeY" value="' + item.thumbnail.sizeY + '"/>' +
+            '<input type="hidden" id="offsetX" name="offsetX" value="' + item.thumbnail.offsetX + '"/>' +
+            '<input type="hidden" id="offsetY" name="offsetY" value="' + item.thumbnail.offsetY + '"/>' +
+            '</div>' +
+
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
 //            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
@@ -322,6 +346,8 @@ function renderMutualFriends (data) {
 
         allMutualFrindsBlock.append(html);
     });
+
+    refreshAvatars();
 
     if (data.length < 20) {
         showMoreMutualFriends.hide();
@@ -352,7 +378,14 @@ function renderSearchPeople (data) {
             }
 
         html += '<div class="widget-user-image">' +
-            '<img class="img-circle" src="' + item.smallAvatarLink + '" alt="User Avatar" />' +
+            '<div id="thumbnail-friends">' +
+            '<img alt="thumbnail" src="' + item.smallAvatarLink + '"/>' +
+            '<input type="hidden" id="sizeX" name="sizeX" value="' + item.thumbnail.sizeX + '"/>' +
+            '<input type="hidden" id="sizeY" name="sizeY" value="' + item.thumbnail.sizeY + '"/>' +
+            '<input type="hidden" id="offsetX" name="offsetX" value="' + item.thumbnail.offsetX + '"/>' +
+            '<input type="hidden" id="offsetY" name="offsetY" value="' + item.thumbnail.offsetY + '"/>' +
+            '</div>' +
+
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
 //            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
@@ -367,9 +400,31 @@ function renderSearchPeople (data) {
         allPeople.append(html);
     });
 
+    refreshAvatars();
+
+
     if (data.length < 20) {
         showMorePeople.hide();
     } else {
         showMorePeople.show();
     }
+}
+
+function refreshAvatars() {
+    $('#thumbnail-friends img').css({
+        width: '100%',
+        height: '100%',
+        position: 'absolute'
+    });
+
+    $('#thumbnail-friends img').each(function(i) {
+        var thumbnail = $('#thumbnail-friends img').eq(i);
+
+        var width = thumbnail.parent().find('#sizeX').val();
+        var height = thumbnail.parent().find('#sizeY').val();
+        var offsetX = thumbnail.parent().find('#offsetX').val();
+        var offsetY = thumbnail.parent().find('#offsetY').val();
+
+        renderThumbnail(width, height, offsetX, offsetY, thumbnail);
+    });
 }

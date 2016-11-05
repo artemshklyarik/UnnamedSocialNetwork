@@ -88,3 +88,95 @@ span.pull-right.badge.bg-aqua {
 .widget-user-2 .widget-user-username, .widget-user-2 .widget-user-desc {
     min-height: 15px;
 }
+
+#current_avatar {
+   max-width: 100%;
+}
+
+.new_photo {
+    margin-top: 30px;
+}
+#thumbnail {
+     width: 100px;
+     height: 100px;
+     position: absolute;
+     left: calc(50% - 50px);
+     border-radius: 50%;
+     overflow: hidden;
+ }
+
+#thumbnail img {
+
+}
+
+#sidebar-thumbnail {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+#sidebar-thumbnail img {
+
+}
+
+#thumbnail-header-small {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: -8px 5px;
+    display: inline-block;
+}
+
+#thumbnail-header-big {
+    width: 90px;
+    height: 90px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: -8px 5px;
+    display: inline-block;
+}
+
+#thumbnail-friends {
+    width: 65px;
+    height: 65px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.widget-user-image {
+    float: left;
+}
+
+.user-panel {
+     min-height: 60px;
+}
+
+#thumbnail-block .buttons{
+    position: relative;
+    left: 20%;
+    top: 150px;
+    width: 60%;
+}
+
+#thumbnail-block .buttons #change-thumbnail {
+
+}
+
+#thumbnail-block .buttons #submit-thumbnail {
+    display: none;
+}
+
+#thumbnail-block .buttons #cancel-thumbnail {
+    display: none;
+}
+
+.profile-username {
+    margin-top: 110px;
+}
+

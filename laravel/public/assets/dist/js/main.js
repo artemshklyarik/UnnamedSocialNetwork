@@ -95,4 +95,64 @@ $(document).ready(function() {
         });
     });
     //end remove question
+
+    //sidebar-thumbnail
+    var width = $('#sizeX').val();
+    var height = $('#sizeY').val();
+    var offsetX = $('#offsetX').val();
+    var offsetY = $('#offsetY').val();
+
+    $('#sidebar-thumbnail img').css({
+            width: '100%',
+            height: '100%',
+            position: 'absolute'
+        });
+    var thumbnail = $('#sidebar-thumbnail img');
+
+    renderThumbnail(width, height, offsetX, offsetY, thumbnail);
+
+    //end sidebar-thumbnail
+
+    //header small thumbnail
+    $('#thumbnail-header-small img').css({
+                width: '100%',
+                height: '100%',
+                position: 'absolute'
+            });
+    var thumbnail = $('#thumbnail-header-small img');
+
+    renderThumbnail(width, height, offsetX, offsetY, thumbnail);
+    //end header small thumbnail
+
+    //header big thumbnail
+    $('#thumbnail-header-big img').css({
+                width: '100%',
+                height: '100%',
+                position: 'absolute'
+            });
+    var thumbnail = $('#thumbnail-header-big img');
+
+    renderThumbnail(width, height, offsetX, offsetY, thumbnail);
+    //end header big thumbnail
+
 });
+
+function renderThumbnail(width, height, offsetX, offsetY, thumbnail)
+{
+    var thumbnailWidth  = thumbnail.parent().width(),
+        thumbnailHeight = thumbnail.parent().height();
+
+    var thumbnailX = thumbnailWidth / (width / 100);
+    var thumbnailY = thumbnailHeight / (height / 100);
+
+    var thumbnailOffsetX = (thumbnailX / thumbnailWidth) * thumbnailWidth * (offsetX / 100);
+    var thumbnailOffsetY = (thumbnailY / thumbnailHeight) * thumbnailHeight * (offsetY / 100);
+
+    thumbnail.css({
+        width: thumbnailX + 'px',
+        height: thumbnailY + 'px',
+        top: '-' + thumbnailOffsetY + 'px',
+        left: '-' + thumbnailOffsetX + 'px'
+    });
+
+}
