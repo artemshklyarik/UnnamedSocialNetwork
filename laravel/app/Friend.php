@@ -85,6 +85,8 @@ class Friend extends Model
             ->select('user_id_1 as user_id')
             ->count();
 
+        $allOwnerFriends = array();
+
         if ($idUser2) {
             $friends['allTemp'] = DB::table('friends')
                 ->where(function ($query) use ($authUser) {
@@ -183,8 +185,8 @@ class Friend extends Model
             $limit   = 20; //constant
             $offset  = ($page - 1) * $limit;
 
-            $temp = $temp->offset($offset)
-                ->limit($limit);
+//            $temp = $temp->offset($offset)
+//                ->limit($limit);
         }
 
         $temp = $temp->get();
