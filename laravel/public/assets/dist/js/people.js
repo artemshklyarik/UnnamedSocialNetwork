@@ -106,7 +106,13 @@ function makeRequest() {
             if ($(this).val() != '') {
                 tempUrl += '&' + $(this).attr('id') + '=' + $(this).val();
             }
+
+            var query = $('#name').val();
+            if (query != '') {
+                tempUrl += '&q=' + query;
+            }
         })
+
     } else if (scope == 'requests') {
         $('#requests .filter-block select').each(function() {
             if ($(this).val() != '') {
@@ -198,12 +204,12 @@ function renderAllFriends (data) {
 
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
-//            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
+            '<h5 class="widget-user-desc">' + item.age + '</h5>' +
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
             '<ul class="nav nav-stacked">' +
-            '<li><a href="' + item.id + '">Test information</a></li>';
+            '<li><a href="' + item.id + '">City</a></li>';
 
             if (!userId) {
                 html += '<a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="' + item.id + '" data-action="remove">' +
@@ -257,12 +263,12 @@ function renderRequests (data) {
 
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
-//            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
+            '<h5 class="widget-user-desc">' + item.age + '</h5>' +
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
             '<ul class="nav nav-stacked">' +
-            '<li><a href="' + item.id + '">Test information</a></li>';
+            '<li><a href="' + item.id + '">City</a></li>';
 
             if (!userId) {
 
@@ -329,12 +335,12 @@ function renderMutualFriends (data) {
 
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
-//            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
+            '<h5 class="widget-user-desc">' + item.age + '</h5>' +
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
             '<ul class="nav nav-stacked">' +
-            '<li><a href="' + item.id + '">Test information</a></li>';
+            '<li><a href="' + item.id + '">City</a></li>';
 
             if (!userId) {
                 html += '<a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="' + item.id + '" data-action="remove">' +
@@ -388,12 +394,12 @@ function renderSearchPeople (data) {
 
             '</div>' +
             '<h3 class="widget-user-username">' + item.name + ' ' + item.second_name + '</h3>' +
-//            '<h5 class="widget-user-desc">' + item.status + '</h5>' +
+            '<h5 class="widget-user-desc">' + item.age + '</h5>' +
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
             '<ul class="nav nav-stacked">' +
-            '<li><a href="' + item.id + '">Test information</a></li>';
+            '<li><a href="' + item.id + '">City</a></li>';
 
             html += '</ul></div></div></div>';
 

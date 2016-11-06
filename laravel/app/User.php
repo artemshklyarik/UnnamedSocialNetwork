@@ -8,7 +8,6 @@ use DB;
 use App\Filter;
 use Carbon\Carbon;
 
-
 class User extends Authenticatable
 {
     /**
@@ -197,6 +196,15 @@ class User extends Authenticatable
                     $user->thumbnail['sizeY']   = '100';
                     $user->thumbnail['offsetX'] = '0';
                     $user->thumbnail['offsetY'] = '0';
+                }
+
+                if ($user->date_of_birthday) {
+                    $born = Carbon::parse($user->date_of_birthday);
+                    $age = $born->diff(Carbon::now())->format('%y years');
+
+                    $user->age = $age;
+                } else {
+                    $user->age = '';
                 }
 
                 foreach($user as $key => $value) {

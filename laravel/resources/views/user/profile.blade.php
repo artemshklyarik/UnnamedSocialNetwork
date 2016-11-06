@@ -1,4 +1,7 @@
 @extends('layout.app')
+@section('custom_css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/lightbox/ekko-lightbox.min.css') }}">
+@stop
 @section('content')
     <section class="content-header">
         <h1>
@@ -15,13 +18,15 @@
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <div id="thumbnail">
-                            <img alt="thumbnail" src="{!! $userInfo['avatarLinkSmall'] !!}"/>
-                            <input type="hidden" id="sizeX" name="sizeX" value="{!! $userInfo['thumbnail']['sizeX'] !!}"/>
-                            <input type="hidden" id="sizeY" name="sizeY" value="{!! $userInfo['thumbnail']['sizeY'] !!}"/>
-                            <input type="hidden" id="offsetX" name="offsetX" value="{!! $userInfo['thumbnail']['offsetX'] !!}"/>
-                            <input type="hidden" id="offsetY" name="offsetY" value="{!! $userInfo['thumbnail']['offsetY'] !!}"/>
-                        </div>
+                        <a href="{!! $userInfo['avatarLinkOriginal'] !!}" data-toggle="lightbox" data-title="{!! $userInfo['name'] !!}  {!! $userInfo['second_name'] !!}">
+                            <div id="thumbnail">
+                                <img alt="thumbnail" src="{!! $userInfo['avatarLinkSmall'] !!}"/>
+                                <input type="hidden" id="sizeX" name="sizeX" value="{!! $userInfo['thumbnail']['sizeX'] !!}"/>
+                                <input type="hidden" id="sizeY" name="sizeY" value="{!! $userInfo['thumbnail']['sizeY'] !!}"/>
+                                <input type="hidden" id="offsetX" name="offsetX" value="{!! $userInfo['thumbnail']['offsetX'] !!}"/>
+                                <input type="hidden" id="offsetY" name="offsetY" value="{!! $userInfo['thumbnail']['offsetY'] !!}"/>
+                            </div>
+                        </a>
 
                         <h3 class="profile-username text-center">{!! $userInfo['name'] !!}  {!! $userInfo['second_name'] !!}</h3>
 
@@ -93,7 +98,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#questions" data-toggle="tab">Questions</a></li>
                         @if(!isset($id))
-                            <li><a href="#newquestions" data-toggle="tab">New questions</a></li>
+                            <li><a href="#newquestions" data-toggle="tab">New questions <span class="pull-right badge bg-aqua">{!! count($newQuestions) !!}</span></a></li>
                             <li><a href="#settings" data-toggle="tab">Settings</a></li>
                         @else
                             <li><a href="#ask" data-toggle="tab">Ask new question</a></li>
@@ -214,5 +219,6 @@
 @endsection
 
 @section('custom_js')
+    <script src="{{ asset('assets/plugins/lightbox/ekko-lightbox.min.js') }}"></script>
     <script src="{{ asset('assets/dist/js/profile.js') }}"></script>
 @stop

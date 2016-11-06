@@ -18,6 +18,13 @@ class FriendController extends Controller
         $params['page'] = $request->page;
         $params['ownerId'] = $request->ownerId;
         $params['userId'] = $request->userId;
+
+        if (isset($request->q)) {
+            $params['q'] = $request->q;
+        } else {
+            $params['q'] = '';
+        }
+
         $scope = $request->scope;
         $friends = array();
 
@@ -68,7 +75,7 @@ class FriendController extends Controller
         }
 
         $response = [
-            'friends' => $friends,
+            'friends' => $friends
         ];
         return response()->json($response);
     }

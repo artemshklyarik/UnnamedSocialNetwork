@@ -29,22 +29,6 @@
                                 <button id='submit-thumbnail' type="button" class="btn btn-block btn-info">Save thumbnail</button>
                                 <button id='cancel-thumbnail' type="button" class="btn btn-block btn-danger">Cancel</button>
                             </div>
-
-                            {{--{!! Form::open(['url' => 'edit_profile/edit_thumbnail', 'files' => true]) !!}
-                            {!! csrf_field() !!}
-                            <div class="status">
-                                <p class="success">{!! Session::get('success') !!}</p>
-                                <p class="error">{!!$errors->first('image')!!}</p>
-                                <p class="error">{!! Session::get('error') !!}</p>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('exampleInputFile', 'Upload new photo') !!}
-                                {!! Form::file('photo', ['id' => 'exampleInputFile']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::submit('Upload photo', ['class' => 'btn btn-default']) !!}
-                            </div>
-                            {!! Form::close() !!}--}}
                         </div>
                     </div>
 

@@ -163,9 +163,9 @@ class Friend extends Model
         }
 
         if (isset($params['filters'])) {
-            $friends = User::getCustomUsersInfo($allfriends, $limit, $offset, $params['filters']);
+            $friends = User::getCustomUsersInfo($allfriends, $limit, $offset, $params['filters'], $params['q']);
         } else {
-            $friends = User::getCustomUsersInfo($allfriends, $limit, $offset);
+            $friends = User::getCustomUsersInfo($allfriends, $limit, $offset, null, $params['q']);
         }
 
         return $friends;
@@ -184,9 +184,6 @@ class Friend extends Model
             $page    = $params['page'];
             $limit   = 20; //constant
             $offset  = ($page - 1) * $limit;
-
-//            $temp = $temp->offset($offset)
-//                ->limit($limit);
         }
 
         $temp = $temp->get();

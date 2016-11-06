@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+
     $('#thumbnail img').css({
             width: '100%',
             height: '100%',

@@ -11,8 +11,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(FriendsTableSeeder::class);
-        $this->call(QuestionsTableSeeder::class);
-        $this->call(UpdateUsersNamesSeeder::class);
+        for ($i = 0; $i < 1000; $i++) {
+            $gender = null;
+            if (mt_rand(0, 1)) {
+                $gender = 'male';
+            } else {
+                $gender = 'female';
+            }
+            DB::table('users_info')->insert([
+                'status' => 'Test status number ' . ($i+1),
+                'gender' => $gender,
+            ]);
+        }
     }
 }
