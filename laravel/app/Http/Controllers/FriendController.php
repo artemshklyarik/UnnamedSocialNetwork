@@ -12,6 +12,10 @@ use View;
 
 class FriendController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function userFriendsAjax(Request $request)
     {
         $params = array();
@@ -36,7 +40,7 @@ class FriendController extends Controller
         if ($scope == 'general') {
             if (isset($request->ownerId) && isset($request->userId)) {
                 $ownerId = $request->ownerId;
-                $userId  = $request->userId;
+                $userId = $request->userId;
 
                 $friends = Friend::getUserFriends($userId, $ownerId, $params);
             } else if (isset($request->ownerId)) {
@@ -52,16 +56,16 @@ class FriendController extends Controller
 
         if ($scope == 'mutual') {
             $ownerId = $request->ownerId;
-            $userId  = $request->userId;
+            $userId = $request->userId;
 
             $friends = Friend::getMutualUserFriend($ownerId, $userId, $params);
         }
 
         if ($scope == 'action') {
             $ownerId = $request->ownerId;
-            $userId  = $request->userId;
+            $userId = $request->userId;
 
-            $action  = $request->action;
+            $action = $request->action;
 
             if ($action == 'accept') {
                 Friend::acceptFriendRequest($ownerId, $userId);
@@ -69,9 +73,9 @@ class FriendController extends Controller
                 Friend::removeFriend($ownerId, $userId);
             }
 
-            $friends['all']      = Friend::getUserFriends($userId, null, $params);
+            $friends['all'] = Friend::getUserFriends($userId, null, $params);
             $friends['requests'] = Friend::getUserFriendRequests($ownerId, $params);
-            $friends['count']    = Friend::getUserFriendsCount($ownerId);
+            $friends['count'] = Friend::getUserFriendsCount($ownerId);
         }
 
         $response = [
@@ -80,6 +84,10 @@ class FriendController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * @param Request $request
+     * @return View
+     */
     public function userFriends(Request $request)
     {
         if (isset($request->id) && $request->id) {
@@ -106,6 +114,10 @@ class FriendController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addFriend(Request $request)
     {
         $idFrom = $request->user()->id;
@@ -124,6 +136,10 @@ class FriendController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function acceptRequestFriend(Request $request)
     {
         $idFrom = $userId = $request->user()->id;
@@ -136,6 +152,10 @@ class FriendController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function rejectRequestFriend(Request $request)
     {
         $idFrom = $userId = $request->user()->id;

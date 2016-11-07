@@ -10,27 +10,35 @@ use View;
 
 class SearchController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return View
+     */
     public function searchPeople(Request $request)
     {
-        $authUserId   = $request->user()->id;
+        $authUserId = $request->user()->id;
         $authUserInfo = User::getUserInfo($authUserId);
         $friendsCount = Friend::getUserFriendsCount($authUserId);
 
         return view('search/people', [
             'authUserInfo' => $authUserInfo,
             'friendsCount' => $friendsCount,
-            'q'            => $request->q
+            'q' => $request->q
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function searchPeopleAjax(Request $request)
     {
         $ownerId = $request->user()->id;
 
         $params['page'] = $request->page;
-        $page    = $params['page'];
-        $limit   = 20; //constant
-        $offset  = ($page - 1) * $limit;
+        $page = $params['page'];
+        $limit = 20; //constant
+        $offset = ($page - 1) * $limit;
 
         if (isset($request->q)) {
             $q = $request->q;
@@ -55,5 +63,4 @@ class SearchController extends Controller
         ];
         return response()->json($response);
     }
-
 }

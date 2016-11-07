@@ -7,6 +7,10 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class Photos extends Model
 {
+    /**
+     * @param $fileName
+     * @return bool
+     */
     public static function createAllPhotos($fileName)
     {
         $OriginalFilePath = 'uploads/original/' . $fileName;

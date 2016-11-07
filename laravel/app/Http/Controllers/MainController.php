@@ -20,6 +20,10 @@ class MainController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         if ($request->user()) {
@@ -41,6 +45,11 @@ class MainController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showProfile(Request $request, $id)
     {
         $userId = $request->user()->id;
@@ -63,19 +72,29 @@ class MainController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editProfile(Request $request)
     {
         $userId = $request->user()->id;
         $userInfo = User::getUserInfo($userId);
         $friends = Friend::getUserFriends($userId);
+        $friendsCount = Friend::getUserFriendsCount($userId);
 
         return view('user/editProfile', [
             'userInfo' => $userInfo,
             'authUserInfo' => $userInfo,
-            'friends' => $friends
+            'friends' => $friends,
+            'friendsCount' => $friendsCount
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function uploadPhoto(Request $request)
     {
         $file = array('image' => Input::file('photo'));
@@ -110,6 +129,10 @@ class MainController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function editUserInfo(Request $request)
     {
         $data = Input::all();
@@ -119,6 +142,10 @@ class MainController extends Controller
         return Redirect::to('edit_profile');
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function editGeneralUserInfo(Request $request)
     {
         $data = Input::all();
@@ -131,6 +158,10 @@ class MainController extends Controller
         return Redirect::to('edit_profile');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function removeQuestion(Request $request)
     {
         $itemId = $request->requestId;
@@ -149,6 +180,11 @@ class MainController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
     public function askQuestion(Request $request, $id)
     {
         $validator = Validator::make(
@@ -174,6 +210,11 @@ class MainController extends Controller
         return redirect()->route('user', ['id' => $id]);
     }
 
+    /**
+     * @param Request $request
+     * @param $idQuestion
+     * @return Redirect
+     */
     public function answerQuestion(Request $request, $idQuestion)
     {
         $validator = Validator::make(
@@ -195,6 +236,10 @@ class MainController extends Controller
         return redirect('/');
     }
 
+    /**
+     * @param Request $request
+     * @return null
+     */
     public function saveThumbnailAjax(Request $request)
     {
         $userId = $request->user()->id;

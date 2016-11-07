@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Friend extends Model
 {
+    /**
+     * @param $idFrom
+     * @param $idTo
+     * @return bool
+     */
     public static function sendFriendRequest($idFrom, $idTo)
     {
         if (!$idFrom || !$idTo) {
@@ -35,6 +40,11 @@ class Friend extends Model
         return true;
     }
 
+    /**
+     * @param $idFrom
+     * @param $idTo
+     * @return bool|string
+     */
     public static function isFriend($idFrom, $idTo)
     {
         if ($data = DB::table('friends')
@@ -62,6 +72,11 @@ class Friend extends Model
         return false;
     }
 
+    /**
+     * @param $idUser1
+     * @param null $idUser2
+     * @return mixed
+     */
     public static function getUserFriendsCount($idUser1, $idUser2 = null)
     {
         $authUser = $idUser1;
@@ -124,12 +139,18 @@ class Friend extends Model
         return $friendsCount;
     }
 
+    /**
+     * @param $idUser1
+     * @param null $idUser2
+     * @param null $params
+     * @return array
+     */
     public static function getUserFriends($idUser1, $idUser2 = null, $params = null)
     {
         $friends = array();
-        $page    = $params['page'];
-        $limit   = 20; //constant
-        $offset  = ($page - 1) * $limit;
+        $page = $params['page'];
+        $limit = 20; //constant
+        $offset = ($page - 1) * $limit;
         $allfriends = array();
 
         $friends['allTemp'] = DB::table('friends')
@@ -142,7 +163,7 @@ class Friend extends Model
 
         if (isset($params['userId'])) {
             foreach ($friends['allTemp'] as $friend) {
-                if ($params['userId'] != $friend->user_id_1 ) {
+                if ($params['userId'] != $friend->user_id_1) {
                     $userId = $friend->user_id_1;
                 } else {
                     $userId = $friend->user_id_2;
@@ -152,7 +173,7 @@ class Friend extends Model
             }
         } else {
             foreach ($friends['allTemp'] as $friend) {
-                if ($params['ownerId'] != $friend->user_id_1 ) {
+                if ($params['ownerId'] != $friend->user_id_1) {
                     $userId = $friend->user_id_1;
                 } else {
                     $userId = $friend->user_id_2;
@@ -171,6 +192,11 @@ class Friend extends Model
         return $friends;
     }
 
+    /**
+     * @param $userId
+     * @param null $params
+     * @return mixed
+     */
     public static function getUserFriendRequests($userId, $params = null)
     {
         $requestsIds = array();
@@ -181,9 +207,9 @@ class Friend extends Model
 
         $temp = $temp->select('user_id_1 as user_id');
         if ($params['page']) {
-            $page    = $params['page'];
-            $limit   = 20; //constant
-            $offset  = ($page - 1) * $limit;
+            $page = $params['page'];
+            $limit = 20; //constant
+            $offset = ($page - 1) * $limit;
         }
 
         $temp = $temp->get();
@@ -201,23 +227,29 @@ class Friend extends Model
         return $requests;
     }
 
+    /**
+     * @param $ownerId
+     * @param $userId
+     * @param $params
+     * @return array
+     */
     public static function getMutualUserFriend($ownerId, $userId, $params)
     {
         $friends = array();
 
-        $page    = $params['page'];
-        $limit   = 20; //constant
-        $offset  = ($page - 1) * $limit;
+        $page = $params['page'];
+        $limit = 20; //constant
+        $offset = ($page - 1) * $limit;
         $allFriends = array();
         $allOwnerFriends = array();
 
         $friends['allTemp'] = DB::table('friends')
-        ->where(function ($query) use ($ownerId) {
-            $query->where('user_id_1', '=', $ownerId)
-                ->orWhere('user_id_2', '=', $ownerId);
-        })
-        ->where('confirmed', '=', 1)
-        ->get();
+            ->where(function ($query) use ($ownerId) {
+                $query->where('user_id_1', '=', $ownerId)
+                    ->orWhere('user_id_2', '=', $ownerId);
+            })
+            ->where('confirmed', '=', 1)
+            ->get();
 
         foreach ($friends['allTemp'] as $friend) {
             if ($ownerId != $friend->user_id_1) {
@@ -260,6 +292,11 @@ class Friend extends Model
         return $friends;
     }
 
+    /**
+     * @param $idFrom
+     * @param $idTo
+     * @return bool
+     */
     public static function acceptFriendRequest($idFrom, $idTo)
     {
         if (DB::table('friends')
@@ -276,6 +313,11 @@ class Friend extends Model
         return false;
     }
 
+    /**
+     * @param $idFrom
+     * @param $idTo
+     * @return bool
+     */
     public static function removeFriend($idFrom, $idTo)
     {
         if (DB::table('friends')

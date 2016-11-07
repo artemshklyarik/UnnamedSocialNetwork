@@ -40,7 +40,11 @@ class Question extends Model
         return $newQuestions;
     }
 
-
+    /**
+     * @param $itemId
+     * @param $authUserId
+     * @return bool
+     */
     public static function removeItem($itemId, $authUserId)
     {
         $checkQuestions = DB::table('questions')
@@ -61,6 +65,10 @@ class Question extends Model
         return false;
     }
 
+    /**
+     * @param $params
+     * @return bool
+     */
     public static function askQuestion($params)
     {
         if (!isset($params['anonimous'])) {
@@ -79,6 +87,10 @@ class Question extends Model
         return true;
     }
 
+    /**
+     * @param $params
+     * @return bool
+     */
     public static function answerQuestion($params)
     {
         DB::table('questions')
@@ -92,6 +104,10 @@ class Question extends Model
         return true;
     }
 
+    /**
+     * @param $userId
+     * @return int
+     */
     public static function getUserCount($userId)
     {
         $count = 0;

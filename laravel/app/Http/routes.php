@@ -11,30 +11,27 @@
 |
 */
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
 /*Main Page Route*/
 Route::get('/', ['uses' => 'MainController@index', 'as' => 'main']);
 
+
+//auth
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', ['uses' => 'Auth\AuthController@getLogout', 'as' => 'logout']);
-
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+
+//user page
 Route::get('user/{id}', ['middleware' => 'App\Http\Middleware\UserCheck', 'uses' => 'MainController@showProfile', 'as' => 'user']);
 
+//questions
 Route::post('user/ask/{id}', ['uses' => 'MainController@askQuestion', 'as' => 'ask_question']);
 Route::post('user/answer/{id}', ['uses' => 'MainController@answerQuestion', 'as' => 'answer_question']);
-
 Route::post('user/question/remove', ['uses' => 'MainController@removeQuestion', 'as' => 'remove_question']);
 
-
+//edit_profile
 Route::get('edit_profile', [
     'middleware' => 'App\Http\Middleware\UserCheck',
     'uses' => 'MainController@editProfile',
@@ -62,6 +59,8 @@ Route::post('edit_profile/edit_general_user_info', [
     'as' => 'edit_general_user_info'
 ]);
 
+
+//friends
 Route::post('friends/addfriend', [
     'uses' => 'FriendController@addFriend',
     'as' => 'add_friend'
@@ -75,18 +74,6 @@ Route::post('friends/accept_request_friend', [
 Route::post('friends/reject_request_friend', [
     'uses' => 'FriendController@rejectRequestFriend',
     'as' => 'reject_request_friend'
-]);
-
-Route::get('search/people', [
-    'middleware' => 'App\Http\Middleware\UserCheck',
-    'uses' => 'SearchController@searchPeople',
-    'as' => 'search_people'
-]);
-
-Route::get('search/people/ajax', [
-    'middleware' => 'App\Http\Middleware\UserCheck',
-    'uses' => 'SearchController@searchPeopleAjax',
-    'as' => 'search_people_ajax'
 ]);
 
 Route::post('friends/remove_friend', [
@@ -104,4 +91,17 @@ Route::get('friends/ajax', [
     'middleware' => 'App\Http\Middleware\UserCheck',
     'uses' => 'FriendController@userFriendsAjax',
     'as' => 'user_friends_ajax'
+]);
+
+// search
+Route::get('search/people', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'SearchController@searchPeople',
+    'as' => 'search_people'
+]);
+
+Route::get('search/people/ajax', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'SearchController@searchPeopleAjax',
+    'as' => 'search_people_ajax'
 ]);
