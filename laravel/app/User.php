@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use DB;
 use Carbon\Carbon;
+use App\Geo;
 
 class User extends Authenticatable
 {
@@ -102,6 +103,21 @@ class User extends Authenticatable
                 $userInfo['thumbnail']['sizeY'] = 100;
             }
 
+            $userInfo['country']['id'] = $select->country_id;
+            $userInfo['city']['id'] = $select->city_id;
+
+            if ($userInfo['country']['id']) {
+                $userInfo['country']['name'] = Geo::getCountryNameById($userInfo['country']['id']);
+            } else {
+                $userInfo['country']['name'] = '';
+            }
+
+            if ($userInfo['city']['id']) {
+                $userInfo['city']['name'] = Geo::getCityNameById($userInfo['city']['id']);
+            } else {
+                $userInfo['city']['name'] = '';
+            }
+
         } else {
             $userInfo['avatarLink'] = asset('assets/img/defaultAvatar.jpg');
             $userInfo['avatarLinkSmall'] = asset('assets/img/defaultAvatar.jpg');
@@ -110,6 +126,8 @@ class User extends Authenticatable
             $userInfo['date_of_birthday'] = '';
             $userInfo['status'] = '';
             $userInfo['thumbnail'] = '';
+            $userInfo['country'] = 0;
+            $userInfo['city'] = 0;
         }
 
         return $userInfo;
@@ -224,6 +242,16 @@ class User extends Authenticatable
                     $user->age = $age;
                 } else {
                     $user->age = '';
+                }
+
+                if ($user->country_id) {
+                    $user->geo->country['id']   = $user->country_id;
+                    $user->geo->country['name'] = Geo::getCountryNameById($user->country_id);
+
+                    if ($user->city_id) {
+                        $user->geo->city['id']   = $user->city_id;
+                        $user->geo->city['name'] = Geo::getCityNameById($user->city_id);
+                    }
                 }
 
                 foreach ($user as $key => $value) {

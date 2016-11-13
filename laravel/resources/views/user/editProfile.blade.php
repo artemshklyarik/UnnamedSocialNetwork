@@ -95,7 +95,28 @@
                                     </div>
                                     <!-- /.input group -->
                                 </div>
-                                {{--{!!  Form::date('date_of_birthday', $userInfo['date_of_birthday']) !!}--}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4 title"><label>Country:</label></div>
+                            <div class="col-lg-6 field">
+                                <div class="form-group">
+                                    <input type="hidden" id="countryId" value="{!! $userInfo['country']['id'] !!}" >
+                                    <select id="countries" name="country_id" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4 title"><label>City</label></div>
+                            <div class="col-lg-6 field">
+                                <div class="form-group">
+                                    <input type="hidden" id="cityId" value="{!! $userInfo['city']['id'] !!}" >
+                                    <select id="cities" name="city_id" class="form-control" disabled>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="row">

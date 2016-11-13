@@ -38,19 +38,38 @@
                 <div class="tab-content">
                     <div class="active tab-pane" id="friends">
                         <div class="row nm filter-block">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input type="text" class="form-control" id="name" name="q" value="">
                                 </div>
                             </div>
-                            <div class="col-md-3 col-md-offset-3">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Gender</label>
                                     <select id="gender" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                         <option value="" selected="selected">Any</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="hidden" id="countryId" value="">
+                                    <label>Country</label>
+                                    <select class="form-control" id="countries" name="country">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="hidden" id="cityId" value="">
+                                    <label>City</label>
+                                    <select class="form-control" id="cities" name="city" disabled="">
+
                                     </select>
                                 </div>
                             </div>

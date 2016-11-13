@@ -93,6 +93,15 @@ $(document).ready(function() {
             instance : true
         });
     });
+
+    getgeo();
+
+    $('#countries').change(function (){
+        var countryId = $(this).val();
+        $('#countryId').val(countryId);
+        getgeo();
+    });
+
 });
 
 function save()
@@ -108,4 +117,51 @@ function save()
         type: "get",
         url: url
     });
+}
+
+function getgeo()
+{
+    var country = $('#countryId').val();
+    var city    = $('#cityId').val();
+    var url     = 'geo_ajax';
+
+    if (country) {
+        url += '?country=' + country;
+    }
+
+    $.ajax({
+        type: "get",
+        url: url,
+        success: function(data) {
+            renderSelects(data);
+        }
+    });
+}
+
+function renderSelects(data)
+{
+    var countrySelect = $('#countries');
+    var citySelect    = $('#cities');
+    var countryId     = $('#countryId');
+    var cityId        = $('#cityId');
+
+    countrySelect.html('');
+
+    data.countries.forEach(function(item) {
+        countrySelect.append('<option value="' + item.Code + '">' + item.Name + '</option>');
+    });
+
+    citySelect.html('');
+
+    if (data.cities != undefined && data.cities.length > 0) {
+        citySelect.prop('disabled', false);
+        citySelect.append('<option value="0">Select city</option>');
+        data.cities.forEach(function(item) {
+            citySelect.append('<option value="' + item.ID + '">' + item.Name + '</option>');
+        });
+    } else {
+        citySelect.prop('disabled', true);
+    }
+    countrySelect.val(countryId.val());
+    citySelect.val(cityId.val());
 }

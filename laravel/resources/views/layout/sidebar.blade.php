@@ -2,20 +2,22 @@
     <!-- Inner sidebar -->
     <div class="sidebar">
         <!-- user panel (Optional) -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <div id="sidebar-thumbnail" >
-                    <img alt="thumbnail" src="{!! $authUserInfo['avatarLinkSmall'] !!}"/>
-                    <input type="hidden" id="sizeX" name="sizeX" value="{!! $authUserInfo['thumbnail']['sizeX'] !!}"/>
-                    <input type="hidden" id="sizeY" name="sizeY" value="{!! $authUserInfo['thumbnail']['sizeY'] !!}"/>
-                    <input type="hidden" id="offsetX" name="offsetX" value="{!! $authUserInfo['thumbnail']['offsetX'] !!}"/>
-                    <input type="hidden" id="offsetY" name="offsetY" value="{!! $authUserInfo['thumbnail']['offsetY'] !!}"/>
+        <a href="/">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <div id="sidebar-thumbnail" >
+                        <img alt="thumbnail" src="{!! $authUserInfo['avatarLinkSmall'] !!}"/>
+                        <input type="hidden" id="sizeX" name="sizeX" value="{!! $authUserInfo['thumbnail']['sizeX'] !!}"/>
+                        <input type="hidden" id="sizeY" name="sizeY" value="{!! $authUserInfo['thumbnail']['sizeY'] !!}"/>
+                        <input type="hidden" id="offsetX" name="offsetX" value="{!! $authUserInfo['thumbnail']['offsetX'] !!}"/>
+                        <input type="hidden" id="offsetY" name="offsetY" value="{!! $authUserInfo['thumbnail']['offsetY'] !!}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="pull-left info">
-                <p>{!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}</p>
-            </div>
-        </div><!-- /.user-panel -->
+                <div class="pull-left info">
+                    <p>{!! $authUserInfo['name'] !!} {!! $authUserInfo['second_name'] !!}</p>
+                </div>
+            </div><!-- /.user-panel -->
+        </a>
 
         <!-- Search Form (Optional) -->
         <form action="{!! route('search_people') !!}" method="get" class="sidebar-form">

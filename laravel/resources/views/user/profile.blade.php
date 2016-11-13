@@ -90,6 +90,31 @@
                 </div>
                 <!-- /.box -->
 
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">About Me</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <strong><i class="fa fa-child margin-r-5"></i> Date of birthday</strong>
+                        @if ($userInfo['date_of_birthday'])
+                            <p class="text-muted">{!! $userInfo['date_of_birthday'] !!}</p>
+                        @else
+                            <p class="text-muted">-</p>
+                        @endif
+                        <hr>
+                        <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+                        @if ($userInfo['country']['name'] && $userInfo['city']['name'])
+                            <p class="text-muted">{!! $userInfo['city']['name'] !!}, {!! $userInfo['country']['name'] !!}</p>
+                        @elseif ($userInfo['country']['name'])
+                            <p class="text-muted">{!! $userInfo['country']['name'] !!}</p>
+                        @else
+                            <p class="text-muted">-</p>
+                        @endif
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
             </div>
             <!-- /.col -->
 
@@ -207,7 +232,18 @@
                         @endif
 
                         <div class="tab-pane" id="settings">
-                            333
+                            <div class="row nm">
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label>Language</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control" disabled="">
+                                            <option value="eng">English</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

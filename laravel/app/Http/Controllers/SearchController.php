@@ -20,10 +20,24 @@ class SearchController extends Controller
         $authUserInfo = User::getUserInfo($authUserId);
         $friendsCount = Friend::getUserFriendsCount($authUserId);
 
+        if (isset($request->country)) {
+            $country = $request->country;
+        } else {
+            $country = 'null';
+        }
+
+        if (isset($request->city)) {
+            $city = $request->city;
+        } else {
+            $city = 'null';
+        }
+
         return view('search/people', [
             'authUserInfo' => $authUserInfo,
             'friendsCount' => $friendsCount,
-            'q' => $request->q
+            'q' => $request->q,
+            'country' => $country,
+            'city'    => $city
         ]);
     }
 
@@ -44,6 +58,14 @@ class SearchController extends Controller
             $q = $request->q;
         } else {
             $q = '';
+        }
+
+        if (isset($request->countries) && $request->countries != 'null') {
+            $params['filters']['country_id'] = $request->countries;
+        }
+
+        if (isset($request->cities) && $request->cities != 'null') {
+            $params['filters']['city_id'] = $request->cities;
         }
 
         $usersIds = User::getAllUsersIdsArray($ownerId);
