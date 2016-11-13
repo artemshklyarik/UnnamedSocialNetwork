@@ -3,6 +3,9 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/lightbox/ekko-lightbox.min.css') }}">
 @stop
 @section('content')
+    <div class="overlay">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
     <section class="content-header">
         <h1>
             User Profile

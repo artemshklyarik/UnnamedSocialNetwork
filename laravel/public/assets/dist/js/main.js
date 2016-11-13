@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var loader = $('.overlay');
     $('#datepicker').datepicker({
         format: 'dd-mm-yyyy',
         startDate: '-30y'

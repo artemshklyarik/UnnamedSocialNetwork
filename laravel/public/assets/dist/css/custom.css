@@ -58,7 +58,7 @@ span.pull-right.badge.bg-aqua {
     width: 100%;
     height: 100%;
     z-index: 999;
-    display: none;
+    /*display: none;*/
     background: rgba(255, 255, 255, .75);
 }
     .overlay i {

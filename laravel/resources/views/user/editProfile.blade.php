@@ -3,6 +3,9 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/imgareaselect/css/imgareaselect-default.css') }}">
 @stop
 @section('content')
+    <div class="overlay">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
     <div class="row nm">
         <div class="col-md-6">
             <div class="box box-primary">

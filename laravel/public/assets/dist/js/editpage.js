@@ -1,4 +1,8 @@
+var loader = $('.overlay');
+
 $(document).ready(function() {
+    loader.show();
+
     var avatar = $('img#current_avatar');
     var avatarLink   = avatar.attr('src');
     var avatarWidth  = avatar.width();
@@ -164,4 +168,7 @@ function renderSelects(data)
     }
     countrySelect.val(countryId.val());
     citySelect.val(cityId.val());
+
+    var loader = $('.overlay');
+    loader.hide();
 }

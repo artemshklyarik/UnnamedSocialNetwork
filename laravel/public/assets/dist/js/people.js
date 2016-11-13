@@ -221,9 +221,9 @@ function renderAllFriends (data) {
             '<div class="box box-widget widget-user-2">' +
             '<a href="/user/' + item.id + '">';
             if (item.gender == 'male') {
-                html += '<div class="widget-user-header bg-aqua">';
+                html += '<div class="widget-user-header bg-purple-active">';
             } else if (item.gender == 'female') {
-                html += '<div class="widget-user-header bg-fuchsia">';
+                html += '<div class="widget-user-header bg-maroon">';
             } else {
                 html += '<div class="widget-user-header bg-yellow">';
             }
@@ -289,9 +289,9 @@ function renderRequests (data) {
             '<div class="box box-widget widget-user-2">' +
             '<a href="/user/' + item.id + '">';
             if (item.gender == 'male') {
-                html += '<div class="widget-user-header bg-aqua">';
+                html += '<div class="widget-user-header bg-purple-active">';
             } else if (item.gender == 'female') {
-                html += '<div class="widget-user-header bg-fuchsia">';
+                html += '<div class="widget-user-header bg-maroon">';
             } else {
                 html += '<div class="widget-user-header bg-yellow">';
             }
@@ -370,9 +370,9 @@ function renderMutualFriends (data) {
             '<div class="box box-widget widget-user-2">' +
             '<a href="/user/' + item.id + '">';
             if (item.gender == 'male') {
-                html += '<div class="widget-user-header bg-aqua">';
+                html += '<div class="widget-user-header bg-purple-active">';
             } else if (item.gender == 'female') {
-                html += '<div class="widget-user-header bg-fuchsia">';
+                html += '<div class="widget-user-header bg-maroon">';
             } else {
                 html += '<div class="widget-user-header bg-yellow">';
             }
@@ -444,9 +444,9 @@ function renderSearchPeople (data) {
             '<div class="box box-widget widget-user-2">' +
             '<a href="/user/' + item.id + '">';
             if (item.gender == 'male') {
-                html += '<div class="widget-user-header bg-aqua">';
+                html += '<div class="widget-user-header bg-purple-active">';
             } else if (item.gender == 'female') {
-                html += '<div class="widget-user-header bg-fuchsia">';
+                html += '<div class="widget-user-header bg-maroon">';
             } else {
                 html += '<div class="widget-user-header bg-yellow">';
             }

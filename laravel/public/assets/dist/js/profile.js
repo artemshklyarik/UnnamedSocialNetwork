@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     $(document).on('click', '[data-toggle="lightbox"]', function(event) {
         event.preventDefault();
         $(this).ekkoLightbox();
@@ -19,4 +18,6 @@ $(document).ready(function() {
     var offsetY = thumbnail.parent().find('#offsetY').val();
 
     renderThumbnail(width, height, offsetX, offsetY, thumbnail);
+    var loader = $('.overlay');
+    loader.hide();
 });
