@@ -159,9 +159,9 @@ span.pull-right.badge.bg-aqua {
 
 #thumbnail-block .buttons{
     position: relative;
-    left: 20%;
+    left: 10%;
     top: 150px;
-    width: 60%;
+    width: 80%;
 }
 
 #thumbnail-block .buttons #change-thumbnail {
@@ -179,4 +179,3 @@ span.pull-right.badge.bg-aqua {
 .profile-username {
     margin-top: 110px;
 }
-

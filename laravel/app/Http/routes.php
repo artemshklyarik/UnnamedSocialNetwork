@@ -59,6 +59,11 @@ Route::post('edit_profile/edit_general_user_info', [
     'as' => 'edit_general_user_info'
 ]);
 
+Route::get('geo_ajax', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'MainController@geoAjax',
+    'as' => 'geoAjax'
+]);
 
 //friends
 Route::post('friends/addfriend', [

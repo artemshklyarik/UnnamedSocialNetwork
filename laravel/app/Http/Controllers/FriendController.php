@@ -29,6 +29,14 @@ class FriendController extends Controller
             $params['q'] = '';
         }
 
+        if (isset($request->countries) && $request->countries != 'null') {
+            $params['filters']['country_id'] = $request->countries;
+        }
+
+        if (isset($request->cities) && $request->cities != 'null') {
+            $params['filters']['city_id'] = $request->cities;
+        }
+
         $scope = $request->scope;
         $friends = array();
 
@@ -73,7 +81,8 @@ class FriendController extends Controller
                 Friend::removeFriend($ownerId, $userId);
             }
 
-            $friends['all'] = Friend::getUserFriends($userId, null, $params);
+            $params['userId'] = $params['ownerId'];
+            $friends['all'] = Friend::getUserFriends($ownerId, null, $params);
             $friends['requests'] = Friend::getUserFriendRequests($ownerId, $params);
             $friends['count'] = Friend::getUserFriendsCount($ownerId);
         }

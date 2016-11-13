@@ -16,6 +16,15 @@ $(document).ready(function() {
     $('.sidebar-menu li#friends-sidebar').addClass('active');
 
     loader.show();
+
+    getgeo();
+
+    $('#countries').change(function (){
+        var countryId = $(this).val();
+        $('#countryId').val(countryId);
+        getgeo();
+    });
+
     makeRequest();
 
     $("body").on("click", "a.ajax-friends-list", function() {
@@ -27,6 +36,15 @@ $(document).ready(function() {
         userId = $(this).attr('data-friend');
         action = $(this).attr('data-action');
         makeRequest();
+    });
+
+    $("body").on("change", ".filter-block select#countries", function() {
+        $('#countryId').val($(this).val());
+        $('#cityId').val('null');
+    });
+
+    $("body").on("change", ".filter-block select#cities", function() {
+        $('#cityId').val($(this).val());
     });
 
     $("body").on("change", ".filter-block select", function() {
@@ -126,15 +144,32 @@ function makeRequest() {
             }
         })
     } else {
+        $('.sidebar-menu li#friends-sidebar').removeClass('active');
+
         $('#search .filter-block select').each(function() {
             var query = $('#name').val();
             if (query != '') {
                 tempUrl += '&q=' + query;
             }
 
+            var element = $(this).attr('id');
+
+            if (element == 'countries') {
+                var country = $('#countryId').val();
+                tempUrl += '&countries=' + country;
+                return;
+            }
+
+            if (element == 'cities') {
+                var city    = $('#cityId').val();
+                tempUrl += '&cities=' + city;
+                return;
+            }
+
             if ($(this).val() != '') {
                  tempUrl += '&' + $(this).attr('id') + '=' + $(this).val();
             }
+
         })
     }
 
@@ -208,8 +243,17 @@ function renderAllFriends (data) {
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
-            '<ul class="nav nav-stacked">' +
-            '<li><a href="' + item.id + '">City</a></li>';
+            '<ul class="nav nav-stacked">';
+
+            if (item.geo) {
+                if (item.geo.city && item.geo.country) {
+                    html += '<li><a href="/search/people?city=' + item.geo.city.id + '&country=' + item.geo.country.id +'">'+ item.geo.city.name +' (' + item.geo.country.name + ')</a></li>';
+                } else if (item.geo.country) {
+                    html += '<li><a href="/search/people?country=' + item.geo.country.id + '">'+ item.geo.country.name + '</a></li>';
+                }
+            } else {
+                html += '<li><a href="/search/people">Location: none</a></li>';
+            }
 
             if (!userId) {
                 html += '<a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="' + item.id + '" data-action="remove">' +
@@ -267,8 +311,17 @@ function renderRequests (data) {
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
-            '<ul class="nav nav-stacked">' +
-            '<li><a href="' + item.id + '">City</a></li>';
+            '<ul class="nav nav-stacked">';
+
+            if (item.geo) {
+                if (item.geo.city && item.geo.country) {
+                    html += '<li><a href="/search/people?city=' + item.geo.city.id + '&country=' + item.geo.country.id +'">'+ item.geo.city.name +' (' + item.geo.country.name + ')</a></li>';
+                } else if (item.geo.country) {
+                    html += '<li><a href="/search/people?country=' + item.geo.country.id + '">'+ item.geo.country.name + '</a></li>';
+                }
+            } else {
+                html += '<li><a href="/search/people">Location: none</a></li>';
+            }
 
             if (!userId) {
 
@@ -339,8 +392,23 @@ function renderMutualFriends (data) {
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
-            '<ul class="nav nav-stacked">' +
-            '<li><a href="' + item.id + '">City</a></li>';
+            '<ul class="nav nav-stacked">';
+
+            if (item.geo) {
+                if (item.geo.city && item.geo.country) {
+                    html += '<li><a href="/search/people?city=' + item.geo.city.id + '&country=' + item.geo.country.id +'">'+ item.geo.city.name +' (' + item.geo.country.name + ')</a></li>';
+                } else if (item.geo.country) {
+                    html += '<li><a href="/search/people?country=' + item.geo.country.id + '">'+ item.geo.country.name + '</a></li>';
+                }
+            } else {
+                html += '<li><a href="/search/people">Location: none</a></li>';
+            }
+
+            if (!userId) {
+                html += '<a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="' + item.id + '" data-action="remove">' +
+                    '<b>Remove from friends</b>' +
+                    '</a>';
+            }
 
             if (!userId) {
                 html += '<a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="' + item.id + '" data-action="remove">' +
@@ -398,8 +466,23 @@ function renderSearchPeople (data) {
             '</div>' +
             '</a>' +
             '<div class="box-footer no-padding">' +
-            '<ul class="nav nav-stacked">' +
-            '<li><a href="' + item.id + '">City</a></li>';
+            '<ul class="nav nav-stacked">';
+
+            if (item.geo) {
+                if (item.geo.city && item.geo.country) {
+                    html += '<li><a href="/search/people?city=' + item.geo.city.id + '&country=' + item.geo.country.id +'">'+ item.geo.city.name +' (' + item.geo.country.name + ')</a></li>';
+                } else if (item.geo.country) {
+                    html += '<li><a href="/search/people?country=' + item.geo.country.id + '">'+ item.geo.country.name + '</a></li>';
+                }
+            } else {
+                html += '<li><a href="/search/people">Location: none</a></li>';
+            }
+
+            if (!userId) {
+                html += '<a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="' + item.id + '" data-action="remove">' +
+                    '<b>Remove from friends</b>' +
+                    '</a>';
+            }
 
             html += '</ul></div></div></div>';
 
@@ -433,4 +516,52 @@ function refreshAvatars() {
 
         renderThumbnail(width, height, offsetX, offsetY, thumbnail);
     });
+}
+
+function getgeo()
+{
+    var country = $('#countryId').val();
+    var city    = $('#cityId').val();
+    var url     = '/geo_ajax';
+
+    if (country) {
+        url += '?country=' + country;
+    }
+
+    $.ajax({
+        type: "get",
+        url: url,
+        success: function(data) {
+            renderSelects(data);
+        }
+    });
+}
+
+function renderSelects(data)
+{
+    var countrySelect = $('#countries');
+    var citySelect    = $('#cities');
+    var countryId     = $('#countryId');
+    var cityId        = $('#cityId');
+
+    countrySelect.html('');
+
+    countrySelect.append('<option value="null">Select country</option>');
+    data.countries.forEach(function(item) {
+        countrySelect.append('<option value="' + item.Code + '">' + item.Name + '</option>');
+    });
+
+    citySelect.html('');
+
+    if (data.cities != undefined && data.cities.length > 0) {
+        citySelect.prop('disabled', false);
+        citySelect.append('<option value="null">Select city</option>');
+        data.cities.forEach(function(item) {
+            citySelect.append('<option value="' + item.ID + '">' + item.Name + '</option>');
+        });
+    } else {
+        citySelect.prop('disabled', true);
+    }
+    countrySelect.val(countryId.val());
+    citySelect.val(cityId.val());
 }

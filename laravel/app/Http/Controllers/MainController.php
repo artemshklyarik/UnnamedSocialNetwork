@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use App\User;
 use App\Question;
 use App\Photos;
+use App\Geo;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Redirect;
@@ -258,5 +259,27 @@ class MainController extends Controller
         User::changeThumbnail($userId, $params);
 
         return null;
+    }
+
+    public function geoAjax(Request $request)
+    {
+        if (isset($request->country)) {
+            $countryId = $request->country;
+            $cities  = Geo::getCitiesByCountyId($countryId);
+            $countries = Geo::getAllCountries();
+
+            $response = [
+                'countries' => $countries,
+                'cities'    => $cities
+            ];
+        } else {
+            $countries = Geo::getAllCountries();
+
+            $response = [
+                'countries' => $countries
+            ];
+        }
+
+        return response()->json($response);
     }
 }
