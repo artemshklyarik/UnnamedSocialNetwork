@@ -110,3 +110,16 @@ Route::get('search/people/ajax', [
     'uses' => 'SearchController@searchPeopleAjax',
     'as' => 'search_people_ajax'
 ]);
+
+//newsletter
+Route::get('newsletter', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'NewsletterController@getPage',
+    'as' => 'newsletter'
+]);
+
+Route::get('newsletter/ajax', [
+    'middleware' => 'App\Http\Middleware\UserCheck',
+    'uses' => 'NewsletterController@NewsletterAjax',
+    'as' => 'newsletter_ajax'
+]);

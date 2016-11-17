@@ -87,7 +87,6 @@ $(document).ready(function() {
                 if (data.status == true) {
                     element.empty();
                 } else {
-                    console.log(element);
                     element.show();
                 }
             }

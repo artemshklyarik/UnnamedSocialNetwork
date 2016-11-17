@@ -58,7 +58,6 @@ span.pull-right.badge.bg-aqua {
     width: 100%;
     height: 100%;
     z-index: 999;
-    /*display: none;*/
     background: rgba(255, 255, 255, .75);
 }
     .overlay i {
@@ -178,4 +177,18 @@ span.pull-right.badge.bg-aqua {
 
 .profile-username {
     margin-top: 110px;
+}
+
+#newsletter .question-block {
+    font-weight: 700;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    padding-bottom: 10px;
+}
+
+#newsletter .answer {
+    padding-top: 15px;
+}
+
+#showMore {
+    margin-bottom: 30px;
 }
