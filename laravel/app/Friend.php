@@ -193,6 +193,35 @@ class Friend extends Model
     }
 
     /**
+     * @param $ownerId
+     * @return array
+     */
+    public static function getUserFriendsIdsById($ownerId)
+    {
+        $friendsIds = array();
+
+        $friends = DB::table('friends')
+            ->where(function ($query) use ($ownerId) {
+                $query->where('user_id_1', '=', $ownerId)
+                    ->orWhere('user_id_2', '=', $ownerId);
+            })
+            ->where('confirmed', '=', 1)
+            ->get();
+
+        foreach ($friends as $friend) {
+            if ($ownerId != $friend->user_id_1) {
+                $userId = $friend->user_id_1;
+            } else {
+                $userId = $friend->user_id_2;
+            }
+
+            $friendsIds[] = $userId;
+        }
+
+        return $friendsIds;
+    }
+
+    /**
      * @param $userId
      * @param null $params
      * @return mixed

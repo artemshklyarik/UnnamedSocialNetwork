@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Carbon\Carbon;
+use App\User;
 
 class Question extends Model
 {
@@ -117,5 +118,32 @@ class Question extends Model
             ->count();
 
         return $count;
+    }
+
+    public static function getQuestionsByUsersIds($usersIds, $page = null)
+    {
+        $questions = DB::table('questions')
+            ->whereIn('questions.answer_man', $usersIds)
+            ->where('questions.answered', '=', 1)
+            ->orderBy('questions.answer_time', 'desc');
+
+        if ($page) {
+            $skip = ($page - 1) * 20;
+            $take = 20;
+
+            $questions = $questions->skip($skip)->take($take);
+        }
+
+        $questions = $questions->get();
+
+        foreach ($questions as &$question) {
+            $question->answerMan = User::getUserInfo($question->answer_man);
+
+            if (!$question->anonimous) {
+                $question->questionMan = User::getUserInfo($question->question_man);
+            }
+        }
+
+        return $questions;
     }
 }

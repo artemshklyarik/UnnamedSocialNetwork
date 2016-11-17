@@ -49,6 +49,11 @@
                     </span>
                 </a>
             </li>
+            <li id="newsletter-sidebar">
+                <a href="{{route('newsletter')}}">
+                    <span>Newsletter</span>
+                </a>
+            </li>
         </ul><!-- /.sidebar-menu -->
 
     </div><!-- /.sidebar -->
