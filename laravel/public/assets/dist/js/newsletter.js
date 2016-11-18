@@ -53,6 +53,13 @@ function reloadData(data) {
         '</li>';
 
         renderBlock.append(html);
+
+        if (data.length < 20) {
+            $('#showMore').hide();
+        } else {
+            $('#showMore').show();
+        }
+
     });
 
     loader.hide();
