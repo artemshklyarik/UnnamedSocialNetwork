@@ -126,8 +126,13 @@ class User extends Authenticatable
             $userInfo['date_of_birthday'] = '';
             $userInfo['status'] = '';
             $userInfo['thumbnail'] = '';
+            $userInfo['thumbnail']['offsetX'] = 0;
+            $userInfo['thumbnail']['offsetY'] = 0;
+            $userInfo['thumbnail']['sizeX'] = 100;
+            $userInfo['thumbnail']['sizeY'] = 100;
             $userInfo['country'] = 0;
             $userInfo['city'] = 0;
+
         }
 
         return $userInfo;
