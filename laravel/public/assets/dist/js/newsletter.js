@@ -38,7 +38,7 @@ function reloadData(data) {
                     '<div class="row nm question-block">' +
                         '<div class="col-md-9 question">' + item.question + '</div>';
 
-                    if (!item.anonimous) {
+                    if (item.anonimous == '0') {
                         html += '<div class="col-md-3 right">from: <a href="/user/' + item.question_man + '">' + item.questionMan.name + ' ' + item.questionMan.second_name + '</a></div>';
                     } else {
                         html += '<div class="col-md-3 right">from: Anonimous</div>';
