@@ -478,12 +478,6 @@ function renderSearchPeople (data) {
                 html += '<li><a href="/search/people">Location: none</a></li>';
             }
 
-            if (!userId) {
-                html += '<a href="http://dev/friends/remove_friend" class="ajax-friends-list btn btn-danger btn-block" data-friend="' + item.id + '" data-action="remove">' +
-                    '<b>Remove from friends</b>' +
-                    '</a>';
-            }
-
             html += '</ul></div></div></div>';
 
         allPeople.append(html);
