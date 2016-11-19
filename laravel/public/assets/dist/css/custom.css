@@ -196,3 +196,11 @@ span.pull-right.badge.bg-aqua {
 .new_photo {
     margin-top: 60px;
 }
+
+#questions h3{
+    max-width: 70%;
+}
+
+.nav-stacked>li>a {
+    min-height: 60px;
+}

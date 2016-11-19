@@ -14,7 +14,7 @@
 
     <!-- Main content -->
     <section class="content">
-
+        {!! csrf_field() !!}
         <div class="row">
             <div class="col-md-3">
 
