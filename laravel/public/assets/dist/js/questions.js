@@ -40,7 +40,7 @@ function reloadData(data) {
 
             html += '<td>' + item.question + '</td>';
 
-            if (item.answered) {
+            if (item.answered != "0") {
                 html += '<td>' + item.answer + '</td>';
             } else {
                 html += '<td>-</td>';
