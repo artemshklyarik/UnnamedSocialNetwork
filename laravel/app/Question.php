@@ -147,4 +147,26 @@ class Question extends Model
 
         return $questions;
     }
+
+    public static function getAllQuestionsByUserId($usersId, $page = null)
+    {
+        $questions = DB::table('questions')
+            ->where('question_man', '=', $usersId)
+            ->orderBy('question_time', 'desc');
+
+        if ($page) {
+            $skip = ($page - 1) * 20;
+            $take = 20;
+
+            $questions = $questions->skip($skip)->take($take);
+        }
+
+        $questions = $questions->get();
+
+        foreach ($questions as &$question) {
+            $question->answerMan = User::getUserInfo($question->answer_man);
+        }
+
+        return $questions;
+    }
 }

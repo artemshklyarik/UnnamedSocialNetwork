@@ -54,6 +54,11 @@
                     <span>Newsletter</span>
                 </a>
             </li>
+            <li id="question-sidebar">
+                <a href="{{route('myquestions')}}">
+                    <span>My questions</span>
+                </a>
+            </li>
         </ul><!-- /.sidebar-menu -->
 
     </div><!-- /.sidebar -->
