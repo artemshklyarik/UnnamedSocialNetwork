@@ -21,7 +21,7 @@ $(document).ready(function() {
                     $('.callout').show();
                     $('.callout').removeClass('callout-info').addClass('callout-success');
                     $('.callout h4').html('Success');
-                    $('.callout p').html('Operation carried out successfully');
+                    $('.callout p').html('Operation perform successfully');
                     $('.box-profile a').remove();
                 } else {
                     $('.callout').removeClass('callout-info').addClass('callout-danger');
