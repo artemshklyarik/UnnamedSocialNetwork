@@ -32,7 +32,7 @@ function reloadData(data) {
         var html = '<tr>' +
                 '<td><a href="user/' + item.answer_man + '">' + item.answerMan.name + ' ' + item.answerMan.second_name + '</td>' +
                 '<td>' + item.question_time + '</td>';
-                if (item.answered) {
+                if (item.answered != "0") {
                     html += '<td><span class="label label-success">Approved</span></td>';
                 } else {
                     html += '<td><span class="label label-warning">Wait answer</span></td>';
@@ -40,7 +40,7 @@ function reloadData(data) {
 
             html += '<td>' + item.question + '</td>';
 
-            if (item.answered != "0") {
+            if (item.answered) {
                 html += '<td>' + item.answer + '</td>';
             } else {
                 html += '<td>-</td>';
