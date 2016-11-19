@@ -35,6 +35,7 @@ class Question extends Model
             ->join('users', 'users.id', '=', 'questions.question_man')
             ->where('answer_man', '=', $userId)
             ->where('answered', '=', 1)
+            ->orderBy('questions.answer_time', 'desc')
             ->select('questions.*', 'users.name', 'users.second_name')
             ->get();
 
