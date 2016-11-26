@@ -124,13 +124,14 @@ class Friend extends Model
             $friendsCount['mutual'] = DB::table('friends')
                 ->where(function ($query) use ($allOwnerFriends, $user) {
                     $query->whereIn('user_id_1', $allOwnerFriends)
-                        ->where('user_id_2', $user);
+                        ->where('user_id_2', $user)
+                        ->where('confirmed', '=', 1);
                 })
                 ->orWhere(function ($query) use ($allOwnerFriends, $user) {
                     $query->whereIn('user_id_2', $allOwnerFriends)
-                        ->where('user_id_1', $user);
+                        ->where('user_id_1', $user)
+                        ->where('confirmed', '=', 1);
                 })
-                ->where('confirmed', '=', 1)
                 ->count();
 
             $friendsCount['test'] = $user . ' ' . $authUser;
@@ -293,13 +294,14 @@ class Friend extends Model
         $friends['allTemp'] = DB::table('friends')
             ->where(function ($query) use ($allOwnerFriends, $userId) {
                 $query->whereIn('user_id_1', $allOwnerFriends)
-                    ->where('user_id_2', $userId);
+                    ->where('user_id_2', $userId)
+                    ->where('confirmed', '=', 1);
             })
             ->orWhere(function ($query) use ($allOwnerFriends, $userId) {
                 $query->whereIn('user_id_2', $allOwnerFriends)
-                    ->where('user_id_1', $userId);
+                    ->where('user_id_1', $userId)
+                    ->where('confirmed', '=', 1);
             })
-            ->where('confirmed', '=', 1)
             ->get();
 
         foreach ($friends['allTemp'] as $friend) {
